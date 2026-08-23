@@ -1,0 +1,59 @@
+/*
+   Identidad de marca: paleta de colores y tipografía como
+   los define el Manual de Marca.
+*/
+
+/* Fuentes (Google Fonts) */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&family=Playfair+Display:wght@400;700&display=swap');
+
+/* Paleta de colores (Manual de Marca) */
+:root {
+  --color-primario: #A0522D;       /* Siena Tostado. Marca, títulos principales */
+  --color-secundario: #87A96B;     /* Verde Salvia. Acentos, sustentabilidad */
+  --color-fondo: #F5E6D3;          /* Alabastro Cálido. Fondos, fotografía */
+  --color-acento: #D4A437;         /* Vara de Oro. Detalles premium, acentos */
+  --color-acento-suave: #C47A6D;   /* Rosa Polvoriento. Acentos suaves */
+
+  /* Tipografía primaria y secundaria de marca */
+  --fuente-primaria: 'Inter', sans-serif;
+  --fuente-secundaria: 'Playfair Display', Georgia, serif;
+}
+
+/* (Manual de Marca)
+   Cada clase es de una fila de la tabla "Guías de Uso
+   Tipográfico" del manual. Se ponen a mano con class="..." donde haga
+   falta.
+*/
+
+/* Títulos principales: Playfair Display, mayúsculas, espaciado 0.1em */
+.titulo-principal {
+  font-family: var(--fuente-secundaria);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--color-primario);
+}
+
+/* Texto del cuerpo: Inter Regular, 11-12pt, altura de línea 1.6 */
+.texto-cuerpo {
+  font-family: var(--fuente-primaria);
+  font-weight: 400;
+  font-size: 0.95rem;  /* ≈ 11-12pt */
+  line-height: 1.6;
+}
+
+/* Leyendas: Inter Light, 9pt, espaciado 0.02em */
+.leyenda {
+  font-family: var(--fuente-primaria);
+  font-weight: 300;
+  font-size: 0.7rem; /* ≈ 9pt */
+  letter-spacing: 0.02em;
+}
+
+/* Botones y CTAs: Inter Medium, mayúsculas, espaciado 0.08em */
+.btn-texto {
+  font-family: var(--fuente-primaria);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
