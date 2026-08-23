@@ -57,3 +57,8 @@
   text-transform: uppercase;
   letter-spacing: 0.08em;
 }
+
+h1, h2 {
+  font-family: var(--fuente-secundaria);
+  color: var(--color-primario);
+}
