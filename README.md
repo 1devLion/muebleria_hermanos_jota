@@ -1,6 +1,6 @@
-# Mueblería Hermanos Jota — E-commerce
+# E-commerce: Mueblería Hermanos Jota
 
-E-commerce desarrollado como proyecto final de Sprint 1 y 2 de la certificación Full Stack Developer. Simula una experiencia de compra completa (catálogo, detalle de producto y carrito) utilizando únicamente tecnologías del lado del cliente, sin conexión a un backend real.
+E-commerce desarrollado como proyecto final de Sprint 1 y 2 de la certificación Full Stack Developer. Simula una experiencia de compra (catálogo, detalle de producto y carrito).
 
 **Sitio en vivo:** [click aquí](https://1devlion.github.io/muebleria_hermanos_jota/)
 
@@ -18,7 +18,7 @@ E-commerce desarrollado como proyecto final de Sprint 1 y 2 de la certificación
 
 ## Descripción del proyecto
 
-El sitio permite a un usuario navegar el catálogo de una mueblería, ver el detalle de cada producto (incluyendo materiales, acabado y garantía) y simular el armado de un carrito de compras. Los 11 productos, sus acabados y el programa de garantía se gestionan localmente mediante arrays de objetos en JavaScript.
+El sitio permite a un usuario navegar el catálogo de la mueblería, ver el detalle de cada producto (incluyendo materiales, acabado y garantía) y simular el armado de un carrito de compras. Los 11 productos, sus acabados y el programa de garantía se gestionan localmente mediante arrays de objetos en JavaScript.
 
 ### Funcionalidades principales
 
