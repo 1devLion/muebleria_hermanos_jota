@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contacto | Mueblería Hermanos Jota</title>
+
+    <!-- Conecto los estilos generales de la marca -->
+    <link rel="stylesheet" href="./css/base.css" />
+    <!-- Conecto los estilos a crear para el formulario -->
+    <link rel="stylesheet" href="./css/form.css" />
+  </head>
+  <body>
+    <!-- Navegación común del sitio -->
+    <header></header>
+
+    <!-- Contenido único de esta página: contacto -->
+    <main>
+      <!-- Sección que reune todo el contenido propio de la página de contacto -->
+      <section class="contacto">
+        <div class="contacto-encabezado">
+          <h1 class="titulo-principal">Contactanos</h1>
+
+          <p class="texto-cuerpo">
+            Estamos para ayudarte. Dejanos tu consulta y te responderemos a la
+            brevedad.
+          </p>
+        </div>
+
+        <!-- Contenedor que reúne el formulario y la información de contacto -->
+        <div class="contacto-contenido">
+          <!-- Formulario de consulta -->
+          <form class="formulario-contacto">
+            <h2>Envíamos tu consulta</h2>
+
+            <!-- Nombre -->
+            <div class="campo-formulario">
+              <label for="nombre">Nombre</label>
+
+              <input
+                type="text"
+                id="nombre"
+                name="nombre"
+                placeholder="Ingresá tu nombre"
+                required
+              />
+            </div>
+
+            <!-- Correo electrónico -->
+            <div class="campo-formulario">
+              <label for="email">Email</label>
+
+              <input
+                type="email"
+                id="email"
+                name="email"
+                placeholder="direccion@email.com"
+                required
+              />
+            </div>
+
+            <!-- Consulta -->
+            <div class="campo-formulario">
+              <label for="mensaje">Mensaje</label>
+
+              <textarea
+                id="mensaje"
+                name="mensaje"
+                rows="6"
+                placeholder="Contanos en qué podemos ayudarte"
+                required
+              ></textarea>
+            </div>
+
+            <!-- Botón para enviar el formulario -->
+            <button class="boton-enviar btn-texto" type="submit">
+              Enviar consulta
+            </button>
+          </form>
+
+          <!-- Información de la mueblería -->
+          <section class="contacto-informacion">
+            <h2>Información de Contacto</h2>
+
+            <!-- ¿Dónde se encuentra la mueblería? -->
+            <div class="dato-contacto">
+              <h3>Dirección</h3>
+
+              <address class="texto-cuerpo">
+                Av. San Juan 2847, San Cristóbal, CABA
+              </address>
+            </div>
+
+            <!-- Horarios de  atención -->
+            <div class="dato-contacto">
+              <h3>Horarios</h3>
+
+              <p class="texto-cuerpo">Lunes a viernes: 10 a 19 hs.</p>
+              <p class="texto-cuerpo">Sábados: 10 a 14 hs.</p>
+            </div>
+
+            <!-- Medios de contacto -->
+            <div class="dato-contacto">
+              <h3>Contacto digital</h3>
+
+              <p class="texto-cuerpo">
+                Instagram:
+                <a
+                  href="https://www.instagram.com/hermanosjota_ba"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  @hermanosjota_ba
+                </a>
+              </p>
+
+              <p class="texto-cuerpo">
+                WhatsApp:
+                <a
+                  href="https://wa.me/541145678900"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  +54 11 4567-8900
+                </a>
+              </p>
+            </div>
+          </section>
+        </div>
+      </section>
+    </main>
+
+    <!-- Información común del sitio -->
+    <footer></footer>
+  </body>
+</html>
