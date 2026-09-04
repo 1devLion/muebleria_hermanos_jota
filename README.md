@@ -8,11 +8,11 @@ E-commerce desarrollado como proyecto final de Sprint 1 y 2 de la certificación
 
 ## Integrantes
 
-- Alexis A.
-- [Nombre completo]
-- [Nombre completo]
-- [Nombre completo]
-- [Nombre completo]
+- [Alexis Antiñanco](github.com/1devLion)
+- [Tamara Guidetti](github.com/Tamy594)
+- [Martín Betancor](github.com/bentadev)
+- [Ramiro Rosales](github.com/ramirosales52)
+- [Puca Patiño Kevin Jonathan](github.com/KevinJPP)
 
 ---
 
