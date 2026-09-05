@@ -175,6 +175,19 @@
   text-align: center;
 }
 
+.product-empty {
+  grid-column: 1 / -1;
+  margin: 0;
+  padding: 2rem 0;
+
+  font-family: var(--fuente-primaria);
+  font-size: 0.9rem;
+
+  color: var(--color-secundario);
+
+  text-align: center;
+}
+
 /* ================================
    BUSCADOR DE PRODUCTOS
    ================================ */
