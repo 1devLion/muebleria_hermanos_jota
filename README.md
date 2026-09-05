@@ -12,7 +12,7 @@ E-commerce desarrollado como proyecto final de Sprint 1 y 2 de la certificación
 - [Tamara Guidetti](github.com/Tamy594)
 - [Martín Betancor](github.com/bentadev)
 - [Ramiro Rosales](github.com/ramirosales52)
-- [Puca Patiño Kevin Jonathan](github.com/KevinJPP)
+- [Kevin Jonathan Puca Patiño](github.com/KevinJPP)
 
 ---
 
