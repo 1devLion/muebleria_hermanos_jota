@@ -44,7 +44,7 @@
 
 .detalle-acabado p,
 .detalle-garantia p {
-  color: #555;
+  color: rgba(44, 44, 42, 0.75);
   margin: 0.25rem 0;
 }
 
@@ -58,14 +58,14 @@
   padding: 1rem 1.5rem;
   width: 100%;
   font-size: 1.1rem;
-  border: 2px solid var(--color-secundario);
-  background: var(--color-secundario);
+  border: 2px solid var(--color-primario);
+  background: var(--color-primario);
   color: #fff;
   cursor: pointer;
   transition: background 0.2s ease;
 }
 
 #btn-agregar-carrito:hover {
-  background: #527a3f;
-  border-color: #527a3f;
+  background: #8c4526;
+  border-color: #8c4526;
 }
