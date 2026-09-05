@@ -72,18 +72,36 @@ function renderProduct(product, container) {
   `;
 
   const addToCartButton = container.querySelector('#btn-agregar-carrito');
-  addToCartButton.addEventListener('click', () => {
-    addToCart(product);
-  });
+  if (addToCartButton) {
+    addToCartButton.addEventListener('click', () => {
+      addToCart(product);
+      renderHeader();
+    });
+  }
 }
 
 // Inicializa la página de detalle de producto.
-function initDetailPage() {
+async function fetchProductById(id) {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      // String() evita fallos si el ID en products.js está guardado como número
+      const found = products.find((p) => String(p.id) === String(id));
+      resolve(found);
+    }, 300);
+  });
+}
+async function initDetailPage() {
   const container = document.querySelector('#detalle-producto-container');
   if (!container) return;
 
   const productId = getProductIdFromUrl();
-  const product = products.find((p) => p.id === productId);
+
+  if (!productId) {
+    renderProductNotFound(container);
+    return;
+  }
+
+  const product = await fetchProductById(productId);
 
   if (!product) {
     renderProductNotFound(container);
