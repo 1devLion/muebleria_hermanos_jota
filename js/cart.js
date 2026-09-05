@@ -1,11 +1,15 @@
-// Array que guarda los productos que la persona agrega al carrito.
-const carrito = [];
+// Recupera el carrito guardado en localStorage, o arranca vacío.
+const carrito = JSON.parse(localStorage.getItem("carrito")) || [];
 
-// Función par agregar un producto al carrito (si ya existe, aumenta su cantidad).
-function agregarAlCarrito(producto) {
+// Guarda el estado actual del carrito en localStorage.
+function guardarCarrito() {
+  localStorage.setItem("carrito", JSON.stringify(carrito));
+}
+
+// Función para agregar un producto al carrito (si ya existe, aumenta su cantidad).
+export function addToCart(producto) {
   let productoEncontrado = false;
 
-  // Ciclo para recorrer todos los productos que ya están en el carrito.
   for (let indice = 0; indice < carrito.length; indice++) {
     if (carrito[indice].producto.id === producto.id) {
       carrito[indice].cantidad = carrito[indice].cantidad + 1;
@@ -14,22 +18,21 @@ function agregarAlCarrito(producto) {
     }
   }
 
-  // Condicional para agregar un nuevo producto.
   if (productoEncontrado === false) {
     const nuevoItem = {
       producto: producto,
       cantidad: 1,
     };
-
     carrito.push(nuevoItem);
   }
+
+  guardarCarrito();
 }
 
 // Función que suma las cantidades de todos los productos del carrito.
-function obtenerCantidadCarrito() {
+export function obtenerCantidadCarrito() {
   let cantidadTotal = 0;
 
-  // Ciclo para recorrer todos los productos que están en el carrito.
   for (let indice = 0; indice < carrito.length; indice++) {
     cantidadTotal = cantidadTotal + carrito[indice].cantidad;
   }
@@ -38,6 +41,6 @@ function obtenerCantidadCarrito() {
 }
 
 // Función que devuelve todos los productos que contiene el carrito.
-function obtenerCarrito() {
+export function obtenerCarrito() {
   return carrito;
 }
