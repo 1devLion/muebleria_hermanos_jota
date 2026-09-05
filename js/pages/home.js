@@ -1,6 +1,8 @@
 // Lógica de la página de inicio.
 import { products } from '../data/products.js';
 import { createProductCard } from '../components/productCard.js';
+import { renderHeader } from '../components/header.js';
+import { renderFooter } from '../components/footer.js';
 
 // Carga simulada de los productos destacados (petición asíncrona simulada).
 function fetchFeaturedProducts() {
@@ -38,4 +40,8 @@ async function initHomePage() {
   renderFeaturedProducts(grid, destacados);
 }
 
-document.addEventListener('DOMContentLoaded', initHomePage);
+document.addEventListener('DOMContentLoaded', () => {
+  renderHeader();
+  renderFooter();
+  initHomePage();
+});
