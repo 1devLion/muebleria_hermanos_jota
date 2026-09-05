@@ -1,0 +1,168 @@
+/*
+  Estilos exclusivos de la página de contacto y su formulario.
+  Los colores y las tipografías se reutilizan desde base.css.
+*/
+
+/* Este bloque da aire alrededor de todo el contenido de contacto */
+.contacto {
+  padding: 2rem 1rem;
+  background-color: var(--color-fondo);
+  font-family: var(--fuente-primaria);
+}
+
+/* Este bloque separa y centra el título de la introducción */
+.contacto-encabezado {
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+/* Este selector apunta al título que está dentro del encabezado */
+.contacto-encabezado h1 {
+  margin: 0 0 0.75rem;
+}
+
+/* Este selector evita márgenes extra en el texto introductorio */
+.contacto-encabezado p {
+  margin: 0;
+}
+
+/* En celular, el formulario y la información se muestran uno debajo del otro */
+.contacto-contenido {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+/* Este bloque separa visualmente el formulario del fondo de la página */
+.formulario-contacto {
+  padding: 1.5rem;
+  background-color: #ffffff;
+  border: 1px solid var(--color-acento-suave);
+  border-radius: 0.5rem;
+}
+
+/* Este selector controla el espacio del título dentro del formulario */
+.formulario-contacto h2 {
+  margin: 0 0 1.5rem;
+}
+
+/* Cada campo reúne una etiqueta y su área para escribir */
+.campo-formulario {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1.25rem;
+}
+
+/* Las etiquetas identifican claramente qué dato se solicita */
+.campo-formulario label {
+  font-weight: 500;
+  color: var(--color-primario);
+}
+
+/* Estos estilos se comparten entre los campos de una y varias líneas */
+.campo-formulario input,
+.campo-formulario textarea {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0.75rem;
+  font: inherit;
+  border: 1px solid var(--color-acento-suave);
+  border-radius: 0.25rem;
+}
+
+/* El mensaje puede crecer hacia abajo, pero no de forma horizontal */
+.campo-formulario textarea {
+  resize: vertical;
+}
+
+/* El borde y el contorno ayudan a saber qué campo está seleccionado */
+.campo-formulario input:focus,
+.campo-formulario textarea:focus {
+  outline: 2px solid var(--color-acento);
+  outline-offset: 2px;
+  border-color: var(--color-primario);
+}
+
+/* Este botón ocupa todo el ancho disponible en celular */
+.boton-enviar {
+  width: 100%;
+  padding: 0.85rem 1rem;
+  color: #ffffff;
+  background-color: var(--color-primario);
+  border: none;
+  border-radius: 0.25rem;
+  cursor: pointer;
+}
+
+/* Este cambio da una respuesta visual cuando se pasa el mouse por el botón */
+.boton-enviar:hover {
+  filter: brightness(0.9);
+}
+
+/* Esta tarjeta contiene la dirección, los horarios y los medios digitales */
+.contacto-informacion {
+  padding: 1.5rem;
+  background-color: #ffffff;
+  border: 1px solid var(--color-secundario);
+  border-radius: 0.5rem;
+}
+
+/* Este selector separa el título principal de los datos */
+.contacto-informacion h2 {
+  margin: 0 0 1.5rem;
+}
+
+/* Cada dato de contacto se separa del siguiente */
+.dato-contacto {
+  padding: 1rem 0;
+  border-bottom: 1px solid var(--color-fondo);
+}
+
+/* El último dato no necesita una línea inferior */
+.dato-contacto:last-child {
+  padding-bottom: 0;
+  border-bottom: none;
+}
+
+/* Estos son los subtítulos de Dirección, Horarios y Contacto digital */
+.dato-contacto h3 {
+  margin: 0 0 0.5rem;
+  font-family: var(--fuente-secundaria);
+  color: var(--color-secundario);
+}
+
+/* Se eliminan márgenes innecesarios en cada texto de información */
+.dato-contacto p,
+.dato-contacto address {
+  font-style: normal;
+  margin: 0 0 0.5rem;
+}
+
+/* Los enlaces se distinguen como elementos interactivos */
+.dato-contacto a {
+  color: var(--color-primario);
+  font-weight: 500;
+}
+
+/* El enlace cambia de color cuando se pasa el mouse */
+.dato-contacto a:hover {
+  color: var(--color-acento);
+}
+
+/* En pantallas amplias, las dos tarjetas pasan a mostrarse lado a lado */
+@media (min-width: 768px) {
+  .contacto {
+    padding: 3rem 2rem;
+  }
+
+  .contacto-contenido {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+
+  .formulario-contacto,
+  .contacto-informacion {
+    flex: 1;
+  }
+}
