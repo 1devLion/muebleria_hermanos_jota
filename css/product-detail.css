@@ -1,0 +1,71 @@
+/*
+   Estilos de la página de detalle de producto.
+   Layout y componentes generados desde detail.js.
+*/
+
+.detalle-producto {
+  display: flex;
+  gap: 3rem;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.detalle-imagen {
+  width: 100%;
+  min-width: 280px;
+  max-width: 450px;
+  flex: 1;
+  height: auto;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.detalle-info {
+  flex: 1;
+  min-width: 280px;
+}
+
+.detalle-precio {
+  margin: 1rem 0;
+  font-size: 2.2rem;
+  color: var(--color-primario);
+}
+
+.detalle-acabado,
+.detalle-garantia {
+  margin-top: 1.5rem;
+}
+
+.detalle-acabado h3,
+.detalle-garantia h3 {
+  font-size: 1rem;
+  margin-bottom: 0.3rem;
+}
+
+.detalle-acabado p,
+.detalle-garantia p {
+  color: #555;
+  margin: 0.25rem 0;
+}
+
+.detalle-garantia ul {
+  margin: 0.5rem 0 0;
+  padding-left: 1.2rem;
+}
+
+#btn-agregar-carrito {
+  margin-top: 1.5rem;
+  padding: 1rem 1.5rem;
+  width: 100%;
+  font-size: 1.1rem;
+  border: 2px solid var(--color-secundario);
+  background: var(--color-secundario);
+  color: #fff;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+#btn-agregar-carrito:hover {
+  background: #527a3f;
+  border-color: #527a3f;
+}
