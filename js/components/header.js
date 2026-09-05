@@ -6,7 +6,7 @@ export function renderHeader() {
 
   container.innerHTML = `
     <header>
-      <img class="logo" src="img/ui/logo.svg" alt="Logo de la empresa" />
+      <a href="index.html"><img class="logo" src="img/ui/logo.svg" alt="Logo de la empresa" /></a>
       <nav>
         <a href="index.html">Inicio</a>
         <a href="productos.html">Productos</a>
