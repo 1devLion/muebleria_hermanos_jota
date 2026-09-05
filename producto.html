@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mueblería Hermanos Jota - Detalle de Producto</title>
+  
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/header.css">
+  <link rel="stylesheet" href="css/cart.css">
+  <link rel="stylesheet" href="css/footer.css">
+</head>
+<body>
+
+  <header class="main-header" style="display: flex; justify-content: space-between; align-items: center; padding: 1rem 2rem; background-color: #f8f9fa;">
+    <span class="logo" style="font-weight: bold; font-size: 1.2rem;">Hermanos Jota</span>
+    
+    <aside class="cart-widget">
+      <button class="cart-icon-btn" aria-label="Ver carrito">
+        🛒 <span id="cart-counter" class="cart-counter">0</span>
+      </button>
+    </aside>
+  </header>
+
+  <main class="container" style="max-width: 1000px; margin: 3rem auto; padding: 0 1rem;">
+    <article class="product-detail" style="display: flex; gap: 3rem; flex-wrap: wrap; align-items: center;">
+      
+      <figure class="product-detail__image" style="flex: 1; min-width: 280px; max-width: 450px; margin: 0;">
+        <img src="img/products/mesa_comedor_pampa.webp" alt="Mesa Comedor Pampa" style="width: 100%; height: auto; border-radius: 8px; object-fit: cover;">
+      </figure>
+
+      <section class="product-detail__info" style="flex: 1; min-width: 280px;">
+        <h1 style="color: #8c533e; margin-bottom: 0.5rem;">Mesa Comedor Pampa</h1>
+        <p class="price" style="font-size: 1.8rem; font-weight: bold; margin-bottom: 1rem;">$150.000</p>
+        <p class="description" style="line-height: 1.6; margin-bottom: 1.5rem;">Mesa de centro artesanal construida en madera maciza de roble con acabados finos.</p>
+        
+        <section class="specs" style="margin-bottom: 1.5rem;">
+          <h3 style="font-size: 1rem; margin-bottom: 0.3rem;">Detalles de fabricación:</h3>
+          <p style="color: #555;">Ensamblado a mano.</p>
+        </section>
+
+        <button class="btn-checkout">Añadir al Carrito</button>
+      </section>
+
+    </article>
+  </main>
+
+  <footer class="main-footer" style="text-align: center; padding: 2rem; border-top: 1px solid #eee; margin-top: 4rem;">
+    <p>&copy; 2026 Mueblería Hermanos Jota</p>
+  </footer>
+
+  <script type="module" src="js/pages/detail.js"></script>
+</body>
+</html>
