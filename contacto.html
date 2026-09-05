@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contacto | Mueblería Hermanos Jota</title>
+
+    <link rel="stylesheet" href="./css/base.css" />
+    <link rel="stylesheet" href="./css/form.css" />
+    <link rel="stylesheet" href="./css/header.css" />
+    <link rel="stylesheet" href="./css/footer.css" />
+  </head>
+  <body>
+    <!-- Navegación común del sitio -->
+    <header>
+      <img class="logo" src="./img/ui/logo.svg" alt="Logo de la empresa" />
+
+      <nav>
+        <a href="index.html">Inicio</a>
+        <a href="productos.html">Productos</a>
+        <a href="contacto.html">Contacto</a>
+        <a href="#" aria-label="Ver carrito">🛒</a>
+      </nav>
+    </header>
+
+    <!-- Contenido único de esta página: contacto -->
+    <main>
+      <!-- Sección que reune todo el contenido propio de la página de contacto -->
+      <section class="contacto">
+        <div class="contacto-encabezado">
+          <h1 class="titulo-principal">Contactanos</h1>
+
+          <p class="texto-cuerpo">
+            Estamos para ayudarte. Dejanos tu consulta y te responderemos a la
+            brevedad.
+          </p>
+        </div>
+
+        <!-- Contenedor que reúne el formulario y la información de contacto -->
+        <div class="contacto-contenido">
+          <!-- Formulario de consulta -->
+          <form class="formulario-contacto">
+            <h2>Envíanos tu consulta</h2>
+
+            <!-- Nombre -->
+            <div class="campo-formulario">
+              <label for="nombre">Nombre</label>
+
+              <input
+                type="text"
+                id="nombre"
+                name="nombre"
+                placeholder="Ingresá tu nombre"
+                required
+              />
+            </div>
+
+            <!-- Correo electrónico -->
+            <div class="campo-formulario">
+              <label for="email">Email</label>
+
+              <input
+                type="email"
+                id="email"
+                name="email"
+                placeholder="direccion@email.com"
+                required
+              />
+            </div>
+
+            <!-- Consulta -->
+            <div class="campo-formulario">
+              <label for="mensaje">Mensaje</label>
+
+              <textarea
+                id="mensaje"
+                name="mensaje"
+                rows="6"
+                placeholder="Contanos en qué podemos ayudarte"
+                required
+              ></textarea>
+            </div>
+
+            <!-- Botón para enviar el formulario -->
+            <button class="boton-enviar btn-texto" type="submit">
+              Enviar consulta
+            </button>
+          </form>
+
+          <!-- Información de la mueblería -->
+          <section class="contacto-informacion">
+            <h2>Información de Contacto</h2>
+
+            <!-- ¿Dónde se encuentra la mueblería? -->
+            <div class="dato-contacto">
+              <h3>Dirección</h3>
+
+              <address class="texto-cuerpo">
+                Av. San Juan 2847, San Cristóbal, CABA
+              </address>
+            </div>
+
+            <!-- Horarios de  atención -->
+            <div class="dato-contacto">
+              <h3>Horarios</h3>
+
+              <p class="texto-cuerpo">Lunes a viernes: 10 a 19 hs.</p>
+              <p class="texto-cuerpo">Sábados: 10 a 14 hs.</p>
+            </div>
+
+            <!-- Medios de contacto -->
+            <div class="dato-contacto">
+              <h3>Contacto digital</h3>
+
+              <p class="texto-cuerpo">
+                Email general:
+                <a
+                  href="info@hermanosjota.com.ar"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  info@hermanosjota.com.ar
+                </a>
+              </p>
+
+              <p class="texto-cuerpo">
+                Email ventas:
+                <a
+                  href="ventas@hermanosjota.com.ar"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  ventas@hermanosjota.com.ar
+                </a>
+              </p>
+
+              <p class="texto-cuerpo">
+                Instagram:
+                <a
+                  href="https://www.instagram.com/hermanosjota_ba"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  @hermanosjota_ba
+                </a>
+              </p>
+
+              <p class="texto-cuerpo">
+                WhatsApp:
+                <a
+                  href="https://wa.me/541145678900"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  +54 11 4567-8900
+                </a>
+              </p>
+            </div>
+          </section>
+        </div>
+      </section>
+    </main>
+
+    <!-- Información común del sitio -->
+    <footer id="footer">
+      <div class="footer-info">
+        <h2>Mueblería Hermanos Jota</h2>
+
+        <div class="footer-contenido">
+          <div>
+            <h3>Información</h3>
+            <p>Av. San Juan 2847, San Cristóbal, CABA</p>
+            <p>Lunes a viernes: 10 a 19 hs</p>
+            <p>Sábados: 10 a 14 hs</p>
+          </div>
+
+          <div>
+            <h3>Contacto</h3>
+            <p>Instagram: @hermanosjota_ba</p>
+            <p>WhatsApp: +54 11 4567-8900</p>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
