@@ -1,3 +1,5 @@
+import { addToCart } from '../cart.js';
+
 // Construye la card de un producto y devuelve el elemento DOM.
 export function createProductCard(producto) {
   const card = document.createElement('article');
@@ -35,6 +37,8 @@ export function createProductCard(producto) {
   addBtn.classList.add('product-card-cart');
   addBtn.type = 'button';
   addBtn.textContent = '🛒';
+  addBtn.setAttribute('aria-label', 'Añadir al carrito');
+  addBtn.addEventListener('click', () => addToCart(producto));
 
   actions.append(link, addBtn);
   info.append(name, description, price, actions);

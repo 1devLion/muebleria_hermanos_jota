@@ -27,6 +27,10 @@ export function addToCart(producto) {
   }
 
   guardarCarrito();
+
+  // Avisa a quien esté escuchando (por ejemplo el contador del header)
+  // que el carrito cambió, para que se actualice sin recargar la página.
+  window.dispatchEvent(new CustomEvent('cart:updated'));
 }
 
 // Función que suma las cantidades de todos los productos del carrito.
