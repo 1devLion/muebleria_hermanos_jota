@@ -5,14 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Contacto | Mueblería Hermanos Jota</title>
 
-    <!-- Conecto los estilos generales de la marca -->
     <link rel="stylesheet" href="./css/base.css" />
-    <!-- Conecto los estilos a crear para el formulario -->
     <link rel="stylesheet" href="./css/form.css" />
+    <link rel="stylesheet" href="./css/header.css" />
+    <link rel="stylesheet" href="./css/footer.css" />
   </head>
   <body>
     <!-- Navegación común del sitio -->
-    <header></header>
+    <header>
+      <img class="logo" src="./img/ui/logo.svg" alt="Logo de la empresa" />
+
+      <nav>
+        <a href="index.html">Inicio</a>
+        <a href="productos.html">Productos</a>
+        <a href="contacto.html">Contacto</a>
+        <a href="#" aria-label="Ver carrito">🛒</a>
+      </nav>
+    </header>
 
     <!-- Contenido único de esta página: contacto -->
     <main>
@@ -153,6 +162,25 @@
     </main>
 
     <!-- Información común del sitio -->
-    <footer></footer>
+    <footer id="footer">
+      <div class="footer-info">
+        <h2>Mueblería Hermanos Jota</h2>
+
+        <div class="footer-contenido">
+          <div>
+            <h3>Información</h3>
+            <p>Av. San Juan 2847, San Cristóbal, CABA</p>
+            <p>Lunes a viernes: 10 a 19 hs</p>
+            <p>Sábados: 10 a 14 hs</p>
+          </div>
+
+          <div>
+            <h3>Contacto</h3>
+            <p>Instagram: @hermanosjota_ba</p>
+            <p>WhatsApp: +54 11 4567-8900</p>
+          </div>
+        </div>
+      </div>
+    </footer>
   </body>
 </html>
