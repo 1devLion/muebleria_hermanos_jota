@@ -29,3 +29,13 @@ export function renderHeader() {
 
   return container;
 }
+
+// Cada vez que algo agrega un producto al carrito (desde cualquier página),
+// cart.js emite 'cart:updated' y acá lo escuchamos para refrescar el número
+// sin necesidad de recargar la página.
+window.addEventListener('cart:updated', () => {
+  const counter = document.querySelector('#cart-counter');
+  if (counter) {
+    counter.textContent = obtenerCantidadCarrito();
+  }
+});
