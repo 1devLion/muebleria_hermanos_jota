@@ -4,17 +4,6 @@
   align-items: center;
 }
 
-.cart-icon-btn {
-  background: transparent;
-  border: none;
-  font-size: 1.5rem;
-  cursor: pointer;
-  position: relative;
-  padding: 0.5rem;
-  display: flex;
-  align-items: center;
-}
-
 .cart-counter {
   position: absolute;
   top: -6px;
