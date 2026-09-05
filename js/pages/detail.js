@@ -3,6 +3,8 @@ import { products } from '../data/products.js';
 import { finishes } from '../data/finishes.js';
 import { warrantyProgram } from '../data/warrantyProgram.js';
 import { addToCart } from '../cart.js';
+import { renderHeader } from '../components/header.js';
+import { renderFooter } from '../components/footer.js';
 
 // Lee el id del producto desde la URL.
 function getProductIdFromUrl() {
@@ -91,4 +93,8 @@ function initDetailPage() {
   renderProduct(product, container);
 }
 
-document.addEventListener('DOMContentLoaded', initDetailPage);
+document.addEventListener('DOMContentLoaded', () => {
+  renderHeader();
+  renderFooter();
+  initDetailPage();
+});
