@@ -18,10 +18,62 @@
     top: 50%;
     left: 8%;
     transform: translateY(-50%);
+    max-width: 90%;
+    padding: 1.5rem;
+    background-color: rgba(245, 230, 211, 0.85); /* var(--color-fondo) con transparencia, para contraste sobre la foto */
+    border-radius: 8px;
+}
+
+.hero-content h1 {
+    margin-bottom: 0.75rem;
+}
+
+.hero-content p {
+    margin-bottom: 1.25rem;
 }
 
 .hero-button {
     display: inline-block;
     padding: 12px 25px;
     text-decoration: none;
+    background-color: var(--color-primario);
+    color: #ffffff;
+    border-radius: 6px;
+    transition: opacity 0.2s ease;
+}
+
+.hero-button:hover {
+    opacity: 0.85;
+}
+
+/* ================================
+   NUESTRA HISTORIA
+   ================================ */
+
+.historia {
+    padding: 3rem 1.5rem;
+    background-color: var(--color-fondo);
+    text-align: center;
+}
+
+.historia-contenido {
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+/* ================================
+   RESPONSIVE
+   ================================ */
+
+@media (max-width: 600px) {
+    .hero {
+        height: 380px;
+    }
+
+    .hero-content {
+        left: 5%;
+        right: 5%;
+        max-width: none;
+        padding: 1rem;
+    }
 }
