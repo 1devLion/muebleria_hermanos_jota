@@ -23,12 +23,21 @@ export function createProductCard(producto) {
   price.classList.add('product-card-price');
   price.textContent = `$${producto.price.toLocaleString('es-AR')}`;
 
+  const actions = document.createElement('div');
+  actions.classList.add('product-card-actions');
+
   const link = document.createElement('a');
   link.classList.add('product-card-link');
   link.href = `producto.html?id=${producto.id}`;
   link.textContent = 'Ver producto';
 
-  info.append(name, description, price, link);
+  const addBtn = document.createElement('button');
+  addBtn.classList.add('product-card-cart');
+  addBtn.type = 'button';
+  addBtn.textContent = '🛒';
+
+  actions.append(link, addBtn);
+  info.append(name, description, price, actions);
   card.append(img, info);
 
   return card;
