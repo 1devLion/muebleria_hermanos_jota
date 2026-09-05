@@ -1,6 +1,8 @@
 // Lógica de la página del catálogo de productos.
 import { products } from '../data/products.js';
 import { createProductCard } from '../components/productCard.js';
+import { renderHeader } from '../components/header.js';
+import { renderFooter } from '../components/footer.js';
 
 // Carga simulada de los productos del catálogo (petición asíncrona simulada).
 function fetchProducts() {
@@ -70,4 +72,8 @@ async function initCatalogPage() {
   renderProducts(grid, catalogo);
 }
 
-document.addEventListener('DOMContentLoaded', initCatalogPage);
+document.addEventListener('DOMContentLoaded', () => {
+  renderHeader();
+  renderFooter();
+  initCatalogPage();
+});
