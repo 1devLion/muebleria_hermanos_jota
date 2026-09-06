@@ -116,6 +116,7 @@ export function renderCartPreview() {
     panel = document.createElement('div');
     panel.id = 'cart-preview';
     panel.className = 'cart-preview';
+    panel.addEventListener('click', (event) => event.stopPropagation());
     document.querySelector('.cart-widget-container')?.appendChild(panel);
   }
   return panel;
