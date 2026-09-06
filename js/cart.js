@@ -48,3 +48,64 @@ export function obtenerCantidadCarrito() {
 export function obtenerCarrito() {
   return carrito;
 }
+
+// Suma el precio de todos los productos del carrito (precio × cantidad).
+export function obtenerTotalCarrito() {
+  let total = 0;
+
+  for (let indice = 0; indice < carrito.length; indice++) {
+    total = total + carrito[indice].producto.price * carrito[indice].cantidad;
+  }
+
+  return total;
+}
+
+// Aumenta en 1 la cantidad de un producto ya agregado.
+export function incrementarCantidad(productId) {
+  for (let indice = 0; indice < carrito.length; indice++) {
+    if (carrito[indice].producto.id === productId) {
+      carrito[indice].cantidad = carrito[indice].cantidad + 1;
+      break;
+    }
+  }
+
+  guardarCarrito();
+  window.dispatchEvent(new CustomEvent('cart:updated'));
+}
+
+// Resta 1 a la cantidad de un producto. Si llega a 0, lo saca del carrito.
+export function decrementarCantidad(productId) {
+  for (let indice = 0; indice < carrito.length; indice++) {
+    if (carrito[indice].producto.id === productId) {
+      carrito[indice].cantidad = carrito[indice].cantidad - 1;
+
+      if (carrito[indice].cantidad <= 0) {
+        carrito.splice(indice, 1);
+      }
+      break;
+    }
+  }
+
+  guardarCarrito();
+  window.dispatchEvent(new CustomEvent('cart:updated'));
+}
+
+// Saca un producto del carrito por completo, sin importar su cantidad.
+export function eliminarDelCarrito(productId) {
+  for (let indice = 0; indice < carrito.length; indice++) {
+    if (carrito[indice].producto.id === productId) {
+      carrito.splice(indice, 1);
+      break;
+    }
+  }
+
+  guardarCarrito();
+  window.dispatchEvent(new CustomEvent('cart:updated'));
+}
+
+// Vacía el carrito completo (se usa al confirmar la compra simulada).
+export function vaciarCarrito() {
+  carrito.length = 0;
+  guardarCarrito();
+  window.dispatchEvent(new CustomEvent('cart:updated'));
+}
