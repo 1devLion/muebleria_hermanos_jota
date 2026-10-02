@@ -1,0 +1,19 @@
+.footer-info {
+  padding: 2rem;
+  background-color: #f0f0f0;
+  margin-top: 3rem;
+}
+
+.footer-info h2 {
+  margin-bottom: 1rem;
+}
+
+.footer-contenido {
+  display: flex;
+  gap: 3rem;
+  flex-wrap: wrap;
+}
+
+.footer-contenido address {
+  font-style: normal;
+}
