@@ -38,11 +38,11 @@
 }
 
 .mensaje-formulario--exito {
-  background-color: var(--color-secundario, #87a96b);
-  color: #1b3a1b;
+  background-color: #d4edda;
+  color: #155724;
 }
 
 .mensaje-formulario--error {
-  background-color: var(--color-acento-suave, #c47a6d);
-  color: #4a1f1f;
+  background-color: #f8d7da;
+  color: #721c24;
 }
