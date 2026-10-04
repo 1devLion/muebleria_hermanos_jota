@@ -1,0 +1,79 @@
+/* Identidad de marca: paleta de colores y tipografía, según Manual de Marca */
+
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700&family=Playfair+Display:wght@400;700&display=swap");
+
+:root {
+  --color-primario: #a0522d; /* Siena Tostado — marca, títulos principales */
+  --color-secundario: #87a96b; /* Verde Salvia — acentos, sustentabilidad */
+  --color-fondo: #f5e6d3; /* Alabastro Cálido — fondos, fotografía */
+  --color-acento: #d4a437; /* Vara de Oro — detalles premium */
+  --color-acento-suave: #c47a6d; /* Rosa Polvoriento — acentos suaves */
+
+  --fuente-primaria: "Inter", sans-serif;
+  --fuente-secundaria: "Playfair Display", Georgia, serif;
+}
+
+/* Reset básico */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background-color: var(--color-fondo);
+  font-family: var(--fuente-primaria);
+  color: #222;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+/* Clases de la Guía de Uso Tipográfico */
+
+.titulo-principal {
+  font-family: var(--fuente-secundaria);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--color-primario);
+}
+
+.texto-cuerpo {
+  font-family: var(--fuente-primaria);
+  font-weight: 400;
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.leyenda {
+  font-family: var(--fuente-primaria);
+  font-weight: 300;
+  font-size: 0.7rem;
+  letter-spacing: 0.02em;
+}
+
+.btn-texto {
+  font-family: var(--fuente-primaria);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+h1,
+h2 {
+  font-family: var(--fuente-secundaria);
+  color: var(--color-primario);
+}
+
+/* Evita el cursor de texto al clickear en partes de la página */
+body {
+  cursor: default;
+}
+
+a,
+button,
+[role="button"] {
+  cursor: pointer;
+}
