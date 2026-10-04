@@ -1,0 +1,24 @@
+.footer-info {
+  padding: 2rem;
+  background-color: var(--color-fondo, #f5e6d3);
+  margin-top: 3rem;
+  font-family: var(--fuente-primaria, "Inter", sans-serif);
+}
+
+.footer-info h2 {
+  margin-bottom: 1rem;
+  font-family: var(--fuente-secundaria, "Playfair Display", Georgia, serif);
+  color: var(--color-primario, #a0522d);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.footer-contenido {
+  display: flex;
+  gap: 3rem;
+  flex-wrap: wrap;
+}
+
+.footer-contenido address {
+  font-style: normal;
+}
