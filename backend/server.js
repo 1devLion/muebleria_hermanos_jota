@@ -4,13 +4,16 @@ const logger = require('./middlewares/logger');
 const errorHandler = require('./middlewares/errorHandler');
 
 const app = express();
-const PORT = process.env.PORT || 3000;
-// Origin of the React client (Vite dev server). Override with CLIENT_ORIGIN.
+// 3001 to avoid conflicting with the React dev server.
+const PORT = process.env.PORT || 3001;
+
+// Origin of the React client (Vite dev server, 5173 by default). Can be overridden with the CLIENT_ORIGIN env variable.
 const CLIENT_ORIGIN = process.env.CLIENT_ORIGIN || 'http://localhost:5173';
 
 app.use(logger);
 app.use(express.json());
-// CORS enabled only for the client, not for any origin.
+
+// CORS enabled only for the client.
 app.use(cors({ origin: CLIENT_ORIGIN }));
 
 app.get('/', (req, res) => {
@@ -28,7 +31,7 @@ app.use((req, res) => {
     res.status(404).json({ mensaje: `Ruta no encontrada: ${req.method} ${req.originalUrl}` });
 });
 
-// Must be the last middleware.
+// The error handler always goes at the end of the chain.
 app.use(errorHandler);
 
 app.listen(PORT, () => {

@@ -3,6 +3,8 @@ import { ProductCard } from './ProductCard.jsx';
 import { API_URL } from '../config.js';
 import './ProductList.css';
 
+// limit: if provided, shows only that many items (home featured) and hides the search bar.
+// onViewDetail / onAddToCart: parent functions passed down to each ProductCard.
 export const ProductList = ({ limit, onViewDetail, onAddToCart }) => {
   const [products, setProducts] = useState([]);
   const [search, setSearch] = useState('');
@@ -18,18 +20,18 @@ export const ProductList = ({ limit, onViewDetail, onAddToCart }) => {
         return res.json();
       })
       .then(data => {
-        // El backend devuelve el array directo (se acepta también { data: [...] })
+        // The backend returns the array directly ({ data: [...] } is also accepted).
         setProducts(Array.isArray(data) ? data : data.data);
         setLoading(false);
       })
       .catch(err => {
-        // Sin conexión, fetch falla con un TypeError de mensaje poco claro.
+        // Without a connection fetch fails with a TypeError whose message is not clear.
         setError(err instanceof TypeError ? 'No se pudo conectar con el servidor' : err.message);
         setLoading(false);
       });
   }, []);
 
-  // Filtrado en tiempo real por nombre o descripción
+  // Real-time filtering by name or description.
   const filteredProducts = products.filter(product =>
     product.name.toLowerCase().includes(search.toLowerCase()) ||
     product.description.toLowerCase().includes(search.toLowerCase())
@@ -42,7 +44,7 @@ export const ProductList = ({ limit, onViewDetail, onAddToCart }) => {
 
   return (
     <div className="product-list-container">
-      {/* El buscador solo se muestra si estamos en la vista completa */}
+      {/* The search bar is only shown in the full view */}
       {!limit && (
         <div className="search-bar-container">
           <input

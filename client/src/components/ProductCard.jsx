@@ -2,9 +2,10 @@ import React from 'react';
 import { finishes } from '../data/finishes.js';
 import './ProductCard.css';
 
-// onViewDetail(id): abre el detalle del producto. onAddToCart(product): lo suma al carrito.
+// Receives product and onViewDetail(product), called on the detail button click.
+// onAddToCart(product) is optional: when provided, the cart button is shown.
 export const ProductCard = ({ product, onViewDetail, onAddToCart }) => {
-  // El producto trae solo el id del acabado; el nombre sale de data/finishes.js
+  // The product only has the finish id; the name comes from data/finishes.js
   const finish = finishes.find((f) => f.id === product.finish);
 
   return (
@@ -15,11 +16,7 @@ export const ProductCard = ({ product, onViewDetail, onAddToCart }) => {
         <p className="product-price">${product.price.toLocaleString('es-AR')}</p>
         <p className="product-finish">Acabado: {finish ? finish.name : product.finish}</p>
         <div className="product-actions">
-          <button
-            type="button"
-            className="btn-detalle"
-            onClick={() => onViewDetail && onViewDetail(product.id)}
-          >
+          <button type="button" className="btn-detalle" onClick={() => onViewDetail(product)}>
             Ver Detalle
           </button>
           {onAddToCart && (
