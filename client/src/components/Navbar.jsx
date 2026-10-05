@@ -1,9 +1,10 @@
+import { Link, NavLink } from 'react-router-dom';
 import './Navbar.css';
 
 const LINKS = [
-  { href: '/', label: 'Inicio' },
-  { href: '/productos', label: 'Productos' },
-  { href: '/contacto', label: 'Contacto' },
+  { to: '/', label: 'Inicio' },
+  { to: '/productos', label: 'Productos' },
+  { to: '/contacto', label: 'Contacto' },
 ];
 
 // cartCount: cantidad de productos en el carrito (la pasa el carrito).
@@ -11,15 +12,21 @@ const LINKS = [
 function Navbar({ cartCount = 0, onCartClick }) {
   return (
     <header className="navbar">
-      <a href="/" className="navbar-logo" aria-label="Mueblería Hermanos Jota - Inicio">
+      <Link to="/" className="navbar-logo" aria-label="Mueblería Hermanos Jota - Inicio">
         <img src="/img/ui/logo.svg" alt="Logo de la empresa" />
-      </a>
+      </Link>
 
       <nav className="navbar-nav" aria-label="Navegación principal">
         {LINKS.map((link) => (
-          <a key={link.href} href={link.href} className="navbar-link">
+          <NavLink
+            key={link.to}
+            to={link.to}
+            className={({ isActive }) =>
+              isActive ? 'navbar-link navbar-link--active' : 'navbar-link'
+            }
+          >
             {link.label}
-          </a>
+          </NavLink>
         ))}
 
         <div className="navbar-cart">

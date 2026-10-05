@@ -28,6 +28,10 @@
   color: var(--color-acento-suave, #c47a6d);
 }
 
+.navbar-link--active {
+  color: var(--color-acento, #d4a437);
+}
+
 .navbar-cart {
   position: relative;
 }
