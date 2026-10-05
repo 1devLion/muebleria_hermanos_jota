@@ -1,19 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import { ProductCard } from './ProductCard';
+import { ProductCard } from './ProductCard.jsx';
+import { API_URL } from '../config.js';
 import './ProductList.css';
 
-const API_URL = 'http://localhost:3001/api/productos';
-
 // limit: if provided, shows only that many items (home featured) and hides the search bar.
-// onViewDetail: parent function passed down to each ProductCard.
-export const ProductList = ({ limit, onViewDetail }) => {
+// onViewDetail / onAddToCart: parent functions passed down to each ProductCard.
+export const ProductList = ({ limit, onViewDetail, onAddToCart }) => {
   const [products, setProducts] = useState([]);
   const [search, setSearch] = useState('');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetch(API_URL)
+    fetch(`${API_URL}/api/productos`)
       .then(res => {
         if (!res.ok) {
           throw new Error('No se pudo conectar con el servidor');
@@ -21,11 +20,13 @@ export const ProductList = ({ limit, onViewDetail }) => {
         return res.json();
       })
       .then(data => {
-        setProducts(data.data);
+        // The backend returns the array directly ({ data: [...] } is also accepted).
+        setProducts(Array.isArray(data) ? data : data.data);
         setLoading(false);
       })
       .catch(err => {
-        setError(err.message);
+        // Without a connection fetch fails with a TypeError whose message is not clear.
+        setError(err instanceof TypeError ? 'No se pudo conectar con el servidor' : err.message);
         setLoading(false);
       });
   }, []);
@@ -59,7 +60,12 @@ export const ProductList = ({ limit, onViewDetail }) => {
       <div className="product-grid">
         {displayedProducts.length > 0 ? (
           displayedProducts.map(product => (
-            <ProductCard key={product.id} product={product} onViewDetail={onViewDetail} />
+            <ProductCard
+              key={product.id}
+              product={product}
+              onViewDetail={onViewDetail}
+              onAddToCart={onAddToCart}
+            />
           ))
         ) : (
           <p className="no-results">No se encontraron productos que coincidan con tu búsqueda.</p>

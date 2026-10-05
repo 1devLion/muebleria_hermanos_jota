@@ -52,3 +52,37 @@
 .btn-detalle:hover {
   background-color: #6f4721;
 }
+
+.product-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.product-actions .btn-detalle {
+  flex: 1;
+  margin-top: 0;
+}
+
+.btn-agregar {
+  background: none;
+  border: 1px solid #8b5a2b;
+  border-radius: 4px;
+  padding: 0 12px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.2s;
+}
+
+.btn-agregar:hover {
+  background-color: rgba(139, 90, 43, 0.12);
+}
+
+
+/* "Ver Detalle" ahora es un botón: se le sacan los estilos nativos */
+button.btn-detalle {
+  border: none;
+  font: inherit;
+  font-weight: 500;
+  cursor: pointer;
+}

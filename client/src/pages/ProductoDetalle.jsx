@@ -1,12 +1,9 @@
-import { useParams } from 'react-router-dom';
+import { ProductDetail } from '../components/ProductDetail.jsx';
 
-function ProductoDetalle() {
-  const { id } = useParams();
-
+function ProductoDetalle({ productId, onAddToCart, onBack }) {
   return (
     <main>
-      <h1>Detalle del producto</h1>
-      <p>{id}</p>
+      <ProductDetail productId={productId} onAddToCart={onAddToCart} onBack={onBack} />
     </main>
   );
 }

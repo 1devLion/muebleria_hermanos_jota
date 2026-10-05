@@ -36,9 +36,21 @@
   gap: 8px;
 }
 
-.warranty-badge {
+.detail-warranty {
+  border-top: 1px solid #e0e0e0;
+  padding-top: 12px;
+}
+
+.detail-warranty h2 {
+  margin: 0 0 8px;
+  font-size: 1.1rem;
+}
+
+.detail-warranty ul {
+  margin: 0;
+  padding-left: 18px;
   color: #2e7d32;
-  font-weight: 500;
+  line-height: 1.5;
 }
 
 .detail-description {
@@ -66,4 +78,19 @@
   .product-detail-container {
     grid-template-columns: 1fr;
   }
+}
+
+.btn-volver {
+  align-self: flex-start;
+  background: none;
+  border: none;
+  padding: 0;
+  color: #8b5a2b;
+  font: inherit;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.btn-volver:hover {
+  color: #6f4721;
 }

@@ -4,11 +4,11 @@ const logger = require('./middlewares/logger');
 const errorHandler = require('./middlewares/errorHandler');
 
 const app = express();
-// 3001 to avoid conflicting with the React dev server (which uses 3000 by default).
+// 3001 to avoid conflicting with the React dev server.
 const PORT = process.env.PORT || 3001;
 
-// Origin of the React client (dev server). Can be overridden with the CLIENT_ORIGIN env variable.
-const CLIENT_ORIGIN = process.env.CLIENT_ORIGIN || 'http://localhost:3000';
+// Origin of the React client (Vite dev server, 5173 by default). Can be overridden with the CLIENT_ORIGIN env variable.
+const CLIENT_ORIGIN = process.env.CLIENT_ORIGIN || 'http://localhost:5173';
 
 app.use(logger);
 app.use(express.json());
@@ -26,7 +26,10 @@ app.get('/', (req, res) => {
 const productosRouter = require('./routes/products.routes');
 app.use('/api/productos', productosRouter);
 
-// TODO (Ramiro): register the 404 middleware (notFound.js) here, after the routes.
+// Unknown routes -> JSON 404.
+app.use((req, res) => {
+    res.status(404).json({ mensaje: `Ruta no encontrada: ${req.method} ${req.originalUrl}` });
+});
 
 // The error handler always goes at the end of the chain.
 app.use(errorHandler);
