@@ -74,10 +74,10 @@ El proyecto es una aplicación cliente-servidor: el frontend no tiene datos de p
 - Un componente por responsabilidad (Navbar, Footer, ProductCard, ProductList, ProductDetail, CartPreview, ContactForm). Los datos bajan por props y los eventos suben con callbacks.
 - **El carrito es estado de `App.jsx`** (`useState`). Las funciones agregar, incrementar, decrementar, quitar y vaciar viven ahí; el contador llega al Navbar por props y el desplegable del carrito recibe las funciones por props. El carrito no se guarda en el navegador: se reinicia al recargar la página.
 - `ProductList` hace `fetch` a `GET /api/productos` y maneja tres estados (cargando, error, éxito). Se reutiliza en el inicio (con `limit`, sin buscador) y en el catálogo completo (con buscador en tiempo real).
-- `ProductList` y `ProductDetail` usan renderizado condicional según el estado de la petición. `ProductDetail` pide `GET /api/productos/:id` y muestra el 404 del backend como "Producto no encontrado".
+- `ProductList` usa renderizado condicional según el estado de la petición (cargando, error o lista). `ProductDetail` no hace otro `fetch`: recibe por props el producto que ya trajo el listado y no muestra nada si no hay producto.
 - Los acabados y el programa de garantía están en `client/src/data`, porque el backend solo entrega los productos.
 - `ContactForm` es un formulario controlado: un `useState` por campo y validación al enviar.
-- **Las vistas se eligen con renderizado condicional.** `App.jsx` guarda en estado la vista actual (`home`, `catalog`, `detail` o `contact`) y el id del producto elegido; el Navbar y las cards avisan con callbacks (`onNavigate`, `onViewDetail`). No se usa router, así que la URL no cambia entre vistas y al recargar la página se vuelve al inicio.
+- **Las vistas se eligen con renderizado condicional.** `App.jsx` guarda en estado la vista actual (`home`, `catalog`, `detail` o `contact`) y el producto elegido; el Navbar y las cards avisan con callbacks (`onNavigate`, `onViewDetail`). No se usa router, así que la URL no cambia entre vistas y al recargar la página se vuelve al inicio.
 - El cliente se creó con **Vite** en lugar de `create-react-app`, que está discontinuado.
 
 ---
@@ -86,7 +86,7 @@ El proyecto es una aplicación cliente-servidor: el frontend no tiene datos de p
 
 Necesitás **Node.js 20 o superior** y **npm**. Hay que levantar los dos servidores, cada uno en su propia terminal.
 
-### 1. Backend (puerto 3000)
+### 1. Backend (puerto 3001)
 
 ```bash
 cd backend
@@ -94,7 +94,7 @@ npm install
 npm start
 ```
 
-La API queda en `http://localhost:3000`. Para comprobar que funciona, abrí `http://localhost:3000/api/productos`.
+La API queda en `http://localhost:3001`. Para comprobar que funciona, abrí `http://localhost:3001/api/productos`.
 
 ### 2. Frontend (puerto 5173)
 
@@ -110,9 +110,9 @@ La aplicación queda en `http://localhost:5173`. El catálogo y el detalle neces
 
 | Variable | Dónde | Valor por defecto | Para qué sirve |
 | --- | --- | --- | --- |
-| `PORT` | backend | `3000` | Puerto de la API |
+| `PORT` | backend | `3001` | Puerto de la API |
 | `CLIENT_ORIGIN` | backend | `http://localhost:5173` | Único origen permitido por CORS |
-| `VITE_API_URL` | client (`.env`) | `http://localhost:3000` | URL base de la API |
+| `VITE_API_URL` | client (`.env`) | `http://localhost:3001` | URL base de la API |
 
 Si cambiás el puerto del cliente o del backend, ajustá `CLIENT_ORIGIN` y `VITE_API_URL` para que coincidan (hay un ejemplo en `client/.env.example`).
 

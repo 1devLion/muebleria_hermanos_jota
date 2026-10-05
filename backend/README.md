@@ -9,11 +9,11 @@ npm install
 npm start
 ```
 
-Por defecto escucha en `http://localhost:3000`.
+Por defecto escucha en `http://localhost:3001`.
 
 ## Variables de entorno
 
-- `PORT`: puerto de la API (por defecto `3000`).
+- `PORT`: puerto de la API (por defecto `3001`).
 - `CLIENT_ORIGIN`: origen del cliente permitido por CORS (por defecto `http://localhost:5173`).
 
 ## Endpoints
