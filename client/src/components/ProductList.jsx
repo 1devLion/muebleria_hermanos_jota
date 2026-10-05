@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { ProductCard } from './ProductCard';
+import { ProductCard } from './ProductCard.jsx';
+import { API_URL } from '../config.js';
+import './ProductList.css';
 
-export const ProductList = ({ limit }) => {
+export const ProductList = ({ limit, onViewDetail, onAddToCart }) => {
   const [products, setProducts] = useState([]);
   const [search, setSearch] = useState('');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetch('http://localhost:3000/api/productos')
+    fetch(`${API_URL}/api/productos`)
       .then(res => {
         if (!res.ok) {
           throw new Error('No se pudo conectar con el servidor');
@@ -16,11 +18,13 @@ export const ProductList = ({ limit }) => {
         return res.json();
       })
       .then(data => {
-        setProducts(data.data);
+        // El backend devuelve el array directo (se acepta también { data: [...] })
+        setProducts(Array.isArray(data) ? data : data.data);
         setLoading(false);
       })
       .catch(err => {
-        setError(err.message);
+        // Sin conexión, fetch falla con un TypeError de mensaje poco claro.
+        setError(err instanceof TypeError ? 'No se pudo conectar con el servidor' : err.message);
         setLoading(false);
       });
   }, []);
@@ -54,7 +58,12 @@ export const ProductList = ({ limit }) => {
       <div className="product-grid">
         {displayedProducts.length > 0 ? (
           displayedProducts.map(product => (
-            <ProductCard key={product.id} product={product} />
+            <ProductCard
+              key={product.id}
+              product={product}
+              onViewDetail={onViewDetail}
+              onAddToCart={onAddToCart}
+            />
           ))
         ) : (
           <p className="no-results">No se encontraron productos que coincidan con tu búsqueda.</p>
