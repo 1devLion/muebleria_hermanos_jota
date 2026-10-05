@@ -1,33 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import React from 'react';
+import { finishes } from '../data/finishes';
+import { warrantyProgram } from '../data/warrantyProgram';
+import './ProductDetail.css';
 
-export const ProductDetail = () => {
-  const { id } = useParams();
-  const [product, setProduct] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-    fetch('http://localhost:3000/api/productos')
-      .then(res => res.json())
-      .then(data => {
-        const found = data.data.find(p => p.id === id);
-        if (found) {
-          setProduct(found);
-        } else {
-          setError('Producto no encontrado');
-        }
-        setLoading(false);
-      })
-      .catch(() => {
-        setError('Error al obtener el detalle del producto');
-        setLoading(false);
-      });
-  }, [id]);
-
-  if (loading) return <div className="loading">Cargando detalles del mueble...</div>;
-  if (error) return <div className="error">Error: {error}</div>;
+// Receives the selected product via props. Conditional render: renders nothing if no product.
+export const ProductDetail = ({ product, onAddToCart }) => {
   if (!product) return null;
+
+  const finish = finishes.find(f => f.id === product.finish);
 
   return (
     <div className="product-detail-container">
@@ -37,22 +17,33 @@ export const ProductDetail = () => {
       <div className="product-detail-info">
         <h1>{product.name}</h1>
         <p className="detail-price">${product.price.toLocaleString()}</p>
-        
+
         <div className="specs-section">
           <p><strong>Dimensiones:</strong> {product.size}</p>
           <p><strong>Materiales:</strong> {product.materials}</p>
-          <p><strong>Acabado (Finish):</strong> {product.finish}</p>
-          
-          {product.warrantyProgram && (
-            <p className="warranty-badge">
-              <strong>Programa de Garantía:</strong> {product.warrantyProgram}
+          {finish && (
+            <p>
+              <strong>Acabado:</strong> {finish.name} — {finish.composition} {finish.application}
             </p>
           )}
         </div>
 
         <p className="detail-description">{product.description}</p>
-        
-        <button className="btn-comprar">Agregar al Carrito</button>
+
+        <div className="warranty-badge">
+          <strong>Programa {warrantyProgram.name}</strong>
+          <ul>
+            {warrantyProgram.benefits.map(benefit => (
+              <li key={benefit.id}>
+                <strong>{benefit.name}:</strong> {benefit.description}
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <button type="button" className="btn-comprar" onClick={() => onAddToCart(product)}>
+          Agregar al Carrito
+        </button>
       </div>
     </div>
   );

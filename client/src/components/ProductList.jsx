@@ -1,14 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import { ProductCard } from './ProductCard';
+import './ProductList.css';
 
-export const ProductList = ({ limit }) => {
+const API_URL = 'http://localhost:3001/api/productos';
+
+// limit: if provided, shows only that many items (home featured) and hides the search bar.
+// onViewDetail: parent function passed down to each ProductCard.
+export const ProductList = ({ limit, onViewDetail }) => {
   const [products, setProducts] = useState([]);
   const [search, setSearch] = useState('');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetch('http://localhost:3000/api/productos')
+    fetch(API_URL)
       .then(res => {
         if (!res.ok) {
           throw new Error('No se pudo conectar con el servidor');
@@ -25,7 +30,7 @@ export const ProductList = ({ limit }) => {
       });
   }, []);
 
-  // Filtrado en tiempo real por nombre o descripción
+  // Real-time filtering by name or description.
   const filteredProducts = products.filter(product =>
     product.name.toLowerCase().includes(search.toLowerCase()) ||
     product.description.toLowerCase().includes(search.toLowerCase())
@@ -38,7 +43,7 @@ export const ProductList = ({ limit }) => {
 
   return (
     <div className="product-list-container">
-      {/* El buscador solo se muestra si estamos en la vista completa */}
+      {/* The search bar is only shown in the full view */}
       {!limit && (
         <div className="search-bar-container">
           <input
@@ -54,7 +59,7 @@ export const ProductList = ({ limit }) => {
       <div className="product-grid">
         {displayedProducts.length > 0 ? (
           displayedProducts.map(product => (
-            <ProductCard key={product.id} product={product} />
+            <ProductCard key={product.id} product={product} onViewDetail={onViewDetail} />
           ))
         ) : (
           <p className="no-results">No se encontraron productos que coincidan con tu búsqueda.</p>
