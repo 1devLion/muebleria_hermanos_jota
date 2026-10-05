@@ -19,15 +19,16 @@ const VIEWS = {
 function App() {
   // ---------- Navegación entre vistas ----------
   const [view, setView] = useState(VIEWS.HOME)
-  const [selectedProductId, setSelectedProductId] = useState(null)
+  const [selectedProduct, setSelectedProduct] = useState(null)
 
   function goTo(nextView) {
     setView(nextView)
     window.scrollTo({ top: 0 })
   }
 
-  function viewProductDetail(productId) {
-    setSelectedProductId(productId)
+  // Recibe el producto completo desde ProductCard (onViewDetail(product)).
+  function viewProductDetail(product) {
+    setSelectedProduct(product)
     goTo(VIEWS.DETAIL)
   }
 
@@ -103,7 +104,7 @@ function App() {
       case VIEWS.DETAIL:
         return (
           <ProductoDetalle
-            productId={selectedProductId}
+            product={selectedProduct}
             onAddToCart={addToCart}
             onBack={() => goTo(VIEWS.CATALOG)}
           />
