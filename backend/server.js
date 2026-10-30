@@ -17,10 +17,7 @@ app.use(express.json());
 app.use(cors({ origin: CLIENT_ORIGIN }));
 
 app.get('/', (req, res) => {
-    res.json({
-        ok: true,
-        mensaje: 'Bienvenido al servidor de Mueblería Hermanos Jota'
-    });
+    res.json({ mensaje: 'Bienvenido al servidor de Mueblería Hermanos Jota' });
 });
 
 const productosRouter = require('./routes/products.routes');

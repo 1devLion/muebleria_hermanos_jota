@@ -20,8 +20,8 @@ export const ProductList = ({ limit, onViewDetail, onAddToCart }) => {
         return res.json();
       })
       .then(data => {
-        // The backend returns the array directly ({ data: [...] } is also accepted).
-        setProducts(Array.isArray(data) ? data : data.data);
+        // The backend returns the array directly.
+        setProducts(data);
         setLoading(false);
       })
       .catch(err => {

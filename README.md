@@ -1,18 +1,67 @@
-# E-commerce: Mueblería Hermanos Jota
+# E-commerce: Mueblería Hermanos Jota <!-- omit from toc -->
 
 E-commerce desarrollado como proyecto final de la certificación Full Stack Developer. Simula una experiencia de compra (catálogo, detalle de producto y carrito) con un frontend en **React** que consume una API propia en **Node.js + Express**.
+
+---
+
+## Índice <!-- omit from toc -->
+
+- [Integrantes](#integrantes)
+- [Forma de trabajo](#forma-de-trabajo)
+  - [Git](#git)
+- [Descripción del proyecto](#descripción-del-proyecto)
+  - [Funcionalidades principales](#funcionalidades-principales)
+- [Tecnologías utilizadas](#tecnologías-utilizadas)
+- [Estructura del proyecto](#estructura-del-proyecto)
+- [Arquitectura y decisiones tomadas](#arquitectura-y-decisiones-tomadas)
+- [Instalación y ejecución](#instalación-y-ejecución)
+  - [1. Backend (puerto 3000)](#1-backend-puerto-3000)
+  - [2. Frontend (puerto 5173)](#2-frontend-puerto-5173)
+  - [Variables de entorno (opcionales)](#variables-de-entorno-opcionales)
+- [API](#api)
+- [Flujo de trabajo](#flujo-de-trabajo)
 
 ---
 
 ## Integrantes
 
 - [Alexis Antiñanco](https://github.com/1devLion)
-- [Tamara Guidetti](https://github.com/Tamy594)
 - [Martin Bentancor](https://github.com/bentadev)
-- [Ramiro Rosales](https://github.com/ramirosales52)
 - [Kevin Jonathan Puca Patiño](https://github.com/KevinJPP)
 
+> **Nota:** [Tamara Guidetti](https://github.com/Tamy594) (sprints 3–4) y [Ramiro Rosales](https://github.com/ramirosales52) (sprints 5–6) integraron el equipo en etapas anteriores y se dieron de baja del programa. Sus aportes quedaron reflejados en el historial de commits del repositorio.
+
 ---
+
+## Forma de trabajo
+
+Trabajamos por sprints y, mediante una especie de pseudo-Jira: organizamos las tareas en Google Docs.
+
+- **Tabla de tareas (una por sprint):** columnas Tarea, Se encarga, Estado, Archivos involucrados y ¿Depende de algo?
+- **Tabla guía (una cada dos sprints):** para cada archivo, qué debe traer adentro.
+
+<details>
+<summary>Ver tabla de tareas del sprint 5</summary>
+
+<img src="docs/img/tabla-sprint-5.webp" alt="Tabla de tareas del sprint 5">
+
+</details>
+
+<details>
+<summary>Ver tabla guía de los sprints 5 y 6</summary>
+
+<img src="docs/img/tabla-guia-sprint-5-6.webp" alt="Tabla guía de los sprints 5 y 6">
+
+</details>
+
+Cada uno elige las tareas que desea hacer. Si la tarea depende de un archivo previo enlazado a una tarea anterior, esta no puede comenzar hasta que el archivo previo esté terminado. Hay 4 estados: Sin completar, En curso, Completado y Esperando dependencias. Cuando alguien termina una tarea, marca esa casilla como completada.
+
+### Git
+
+- Una rama por tarea, con nombre `tipo/descripcion-corta` (por ejemplo, `feat/backend-configuracion-mongodb`).
+- Commits con Conventional Commits y la descripción en español: `feat(backend): agregar modelo Product`.
+- No se commitea directo a `main`: los cambios se integran con Pull Request.
+- Cada tarea indica de qué otra depende y cada archivo tiene un solo responsable por tarea, para evitar conflictos al mergear.
 
 ## Descripción del proyecto
 
