@@ -1,9 +1,9 @@
 import { ProductDetail } from '../components/ProductDetail.jsx';
 
-function ProductoDetalle({ productId, onAddToCart, onBack }) {
+function ProductoDetalle({ product, onAddToCart, onBack }) {
   return (
     <main>
-      <ProductDetail productId={productId} onAddToCart={onAddToCart} onBack={onBack} />
+      <ProductDetail product={product} onAddToCart={onAddToCart} onBack={onBack} />
     </main>
   );
 }
