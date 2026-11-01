@@ -1,33 +1,42 @@
-import React from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { finishes } from '../data/finishes.js';
 import { warrantyProgram } from '../data/warrantyProgram.js';
+import { deleteProduct } from '../services/productsApi.js';
+import { imageSrc } from '../utils/imageSrc.js';
 import './ProductDetail.css';
 
-// Receives the selected product via props. Conditional render: renders nothing if no product.
-// onAddToCart(product): adds it to the cart. onBack: optional, goes back to the catalog.
-export const ProductDetail = ({ product, onAddToCart, onBack }) => {
+export const ProductDetail = ({ product, onAddToCart }) => {
+  const navigate = useNavigate();
   if (!product) return null;
 
-  // The product only has the finish id; the details come from data/finishes.js
-  const finish = finishes.find((f) => f.id === product.finish);
+  // Busco el acabado completo por id en finishes.js.
+  const finish = finishes.find((f) => f.id === product.acabado);
+
+  // Pide confirmación, elimina y vuelve al catálogo.
+  async function handleDelete() {
+    if (!window.confirm(`¿Eliminar "${product.nombre}"?`)) return;
+    try {
+      await deleteProduct(product._id);
+      navigate('/productos');
+    } catch (err) {
+      window.alert(err.message);
+    }
+  }
 
   return (
     <div className="product-detail-container">
       <div className="product-detail-image">
-        <img src={`/${product.image}`} alt={product.name} />
+        <img src={imageSrc(product.imagenUrl)} alt={product.nombre} />
       </div>
       <div className="product-detail-info">
-        {onBack && (
-          <button type="button" className="btn-volver" onClick={onBack}>
-            ← Volver al catálogo
-          </button>
-        )}
-        <h1>{product.name}</h1>
-        <p className="detail-price">${product.price.toLocaleString('es-AR')}</p>
+        <Link to="/productos" className="btn-volver">← Volver al catálogo</Link>
+        <h1>{product.nombre}</h1>
+        <p className="detail-price">${product.precio.toLocaleString('es-AR')}</p>
 
+        {/* medidas, materiales y acabado son opcionales en el modelo */}
         <div className="specs-section">
-          <p><strong>Dimensiones:</strong> {product.size}</p>
-          <p><strong>Materiales:</strong> {product.materials}</p>
+          {product.medidas && <p><strong>Dimensiones:</strong> {product.medidas}</p>}
+          {product.materiales && <p><strong>Materiales:</strong> {product.materiales}</p>}
           {finish ? (
             <>
               <p><strong>Acabado:</strong> {finish.name}</p>
@@ -35,11 +44,11 @@ export const ProductDetail = ({ product, onAddToCart, onBack }) => {
               <p><strong>Aplicación:</strong> {finish.application}</p>
             </>
           ) : (
-            <p><strong>Acabado:</strong> {product.finish}</p>
+            product.acabado && <p><strong>Acabado:</strong> {product.acabado}</p>
           )}
         </div>
 
-        <p className="detail-description">{product.description}</p>
+        <p className="detail-description">{product.descripcion}</p>
 
         <div className="detail-warranty">
           <h2>Garantía {warrantyProgram.name}</h2>
@@ -52,13 +61,13 @@ export const ProductDetail = ({ product, onAddToCart, onBack }) => {
           </ul>
         </div>
 
-        <button
-          type="button"
-          className="btn-comprar"
-          onClick={() => onAddToCart && onAddToCart(product)}
-        >
-          Agregar al Carrito
-        </button>
+        <div className="detail-actions">
+          <button type="button" className="btn-comprar" onClick={() => onAddToCart && onAddToCart(product)}>
+            Agregar al Carrito
+          </button>
+          <Link to={`/admin/editar-producto/${product._id}`} className="btn-editar">Editar</Link>
+          <button type="button" className="btn-eliminar" onClick={handleDelete}>Eliminar</button>
+        </div>
       </div>
     </div>
   );
