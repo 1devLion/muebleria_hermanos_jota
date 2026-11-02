@@ -24,8 +24,8 @@ function AdminEditarProducto() {
     navigate(`/productos/${id}`);
   }
 
-  if (loading) return <p>Cargando producto...</p>;
-  if (error) return <p>Error: {error}</p>;
+  if (loading) return <main><p>Cargando producto...</p></main>;
+  if (error) return <main><p>Error: {error}</p></main>;
 
   // El form se monta recién cuando el producto llegó (si no, quedaría vacío).
   return (
