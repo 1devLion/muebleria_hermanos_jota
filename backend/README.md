@@ -2,15 +2,36 @@
 
 API REST en Node.js + Express conectada a MongoDB (Atlas) con Mongoose. Ofrece el CRUD completo de productos.
 
+**En producción:** https://muebleria-hermanos-jota-ntpd.onrender.com
+
+> Está en el plan gratuito de Render: se duerme tras unos minutos sin uso y la primera petición puede tardar cerca de un minuto.
+
+## Requisitos
+
+- **Node.js 20.19 o superior** (lo exige Mongoose 9; conviene declararlo en `engines` de `package.json` para que Render use una versión compatible).
+- Una base de datos en MongoDB Atlas.
+
+## Puesta en marcha
+
+```bash
+npm install
+node seed.js   # carga el catálogo inicial (solo la primera vez, o para restaurarlo)
+npm start
+```
+
+> **Atención:** `seed.js` borra todos los productos de la colección antes de insertar los 11 del catálogo original (con `stock` 10 cada uno). Usalo para restaurar el catálogo, no cuando haya productos cargados que quieras conservar.
+
+La API queda en `http://localhost:3001`.
+
 ## Variables de entorno
 
-Se definen en `backend/.env` (ese archivo **no se sube al repo**; la plantilla es `.env.example`).
+Se definen en `backend/.env` (ese archivo **no se sube al repo**; la plantilla es `.env.example`). En producción se cargan en el panel de Render, en Environment.
 
 | Variable | Obligatoria | Descripción |
 |---|---|---|
-| `MONGODB_URI` | Sí | Cadena de conexión de Atlas, con el nombre de la base antes del `?` (por ejemplo `.../muebleria-jota?retryWrites=true&w=majority`). |
-| `PORT` | No | Puerto de la API. Por defecto `3001`. |
-| `CLIENT_ORIGIN` | No | Origen del frontend permitido por CORS. Por defecto `http://localhost:5173`. En producción, la URL del frontend desplegado. |
+| `MONGODB_URI` | Sí | Cadena de conexión de Atlas, con el nombre de la base antes del `?` (por ejemplo `.../muebleria-jota?retryWrites=true&w=majority`). Es un secreto: nunca va en el repo. |
+| `PORT` | No | Puerto de la API. Por defecto `3001`. Render lo define solo. |
+| `CLIENT_ORIGIN` | No | Origen del frontend permitido por CORS. Por defecto `http://localhost:5173`. En producción, la URL exacta del frontend desplegado, con `https://` y sin barra final. |
 
 ## Modelo Product
 
@@ -33,8 +54,10 @@ Cada producto tiene además el `_id` que genera MongoDB.
 | GET | `/api/productos` | Devuelve todos los productos. | 200 |
 | GET | `/api/productos/:id` | Devuelve un producto por `_id`. | 200, 400 (id inválido), 404 |
 | POST | `/api/productos` | Crea un producto. | 201, 400 (datos inválidos) |
-| PUT | `/api/productos/:id` | Actualiza un producto existente. | 200, 400, 404 |
-| DELETE | `/api/productos/:id` | Elimina un producto. | 200, 404 |
+| PUT | `/api/productos/:id` | Actualiza un producto existente. | 200, 400 (id o datos inválidos), 404 |
+| DELETE | `/api/productos/:id` | Elimina un producto. | 200, 400 (id inválido), 404 |
+
+> **Sin autenticación:** las rutas POST, PUT y DELETE son públicas, porque la consigna no pide login. Cualquiera que conozca la URL puede modificar el catálogo; `node seed.js` lo restaura (borrando lo que se haya cargado de más).
 
 ### Ejemplos
 
@@ -68,7 +91,7 @@ Cada producto tiene además el `_id` que genera MongoDB.
 }
 ```
 
-Va a responder con el producto creado, mostrando su `_id`. Si falta `nombre` o `precio`, tira un `400`.
+Responde con el producto creado, incluido su `_id`. Si falta `nombre` o `precio`, responde `400`.
 
 **PUT `/api/productos/:id`** → `200`
 
@@ -76,22 +99,34 @@ Va a responder con el producto creado, mostrando su `_id`. Si falta `nombre` o `
 { "precio": 130000, "stock": 8 }
 ```
 
-Responde con el producto ya actualizado. Si no existe suelta un `404`.
+Responde con el producto ya actualizado. Si no existe, responde `404`.
 
 **DELETE `/api/productos/:id`** → `200`
 
 ```json
-{ "mensaje": "Producto eliminado" }
+{ "mensaje": "Producto eliminado." }
 ```
 
-Si no existe también `404`.
+Si no existe, responde `404`.
 
 ## Errores
 
 Los errores responden en JSON con la forma `{ "mensaje": "..." }`:
 
-```json
-{ "mensaje": "Producto no encontrado" }
-```
+| Caso | Código | Mensaje |
+|---|---|---|
+| Producto inexistente (GET, PUT o DELETE por id) | 404 | `Producto no encontrado.` |
+| `id` con formato inválido | 400 | `El id no es válido.` |
+| Falla la validación del modelo (POST o PUT) | 400 | Los mensajes del esquema unidos con `. `, por ejemplo `El nombre es obligatorio. El precio es obligatorio` |
+| Ruta inexistente | 404 | `Ruta no encontrada: GET /ruta` |
+| Error no previsto | 500 | El mensaje del error |
 
-Si la ruta no existe suelta un 404 en JSON. Los errores no controlados (incluyendo los de validación e id inválido de Mongoose) los resuelve `middlewares/errorHandler.js`, y `middlewares/logger.js` registra cada petición en consola.
+Los errores de validación e id inválido de Mongoose los resuelve `middlewares/errorHandler.js`, y `middlewares/logger.js` registra cada petición en consola.
+
+## Despliegue en Render
+
+- **Root Directory:** `backend`
+- **Build Command:** `npm install`
+- **Start Command:** `npm start`
+- **Variables:** `MONGODB_URI` y `CLIENT_ORIGIN`. `PORT` no hace falta.
+- En MongoDB Atlas, Network Access tiene que permitir `0.0.0.0/0`; si solo está la IP de una persona, Render no puede conectarse y el servidor falla con un `MongooseServerSelectionError`.
