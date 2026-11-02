@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import './CartPreview.css';
+import { imageSrc } from '../utils/imageSrc.js';
 
 // Vista previa del carrito (desplegable bajo el ícono del Navbar).
 // Todo el estado vive en App.jsx; este componente solo muestra y avisa.
@@ -83,7 +84,7 @@ function CartPreview({
         {cart.map((item) => (
           <li key={item.id} className="cart-preview-item">
             <img
-              src={`/${item.image}`}
+              src={imageSrc(item.image)}
               alt={item.name}
               className="cart-preview-image"
             />

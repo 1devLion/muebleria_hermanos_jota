@@ -1,4 +1,5 @@
-import { useCallback, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
+import { Routes, Route, useLocation } from 'react-router-dom'
 import Navbar from './components/Navbar.jsx'
 import CartPreview from './components/CartPreview.jsx'
 import Footer from './components/Footer.jsx'
@@ -6,55 +7,43 @@ import Inicio from './pages/Inicio.jsx'
 import Productos from './pages/Productos.jsx'
 import ProductoDetalle from './pages/ProductoDetalle.jsx'
 import Contacto from './pages/Contacto.jsx'
+import AdminCrearProducto from './pages/AdminCrearProducto.jsx'
+import AdminEditarProducto from './pages/AdminEditarProducto.jsx'
+import NotFound from './pages/NotFound.jsx'
 import './App.css'
 
-// Vistas de la aplicación: se muestra una u otra con renderizado condicional.
-const VIEWS = {
-  HOME: 'home',
-  CATALOG: 'catalog',
-  DETAIL: 'detail',
-  CONTACT: 'contact',
+// Al cambiar de ruta vuelve arriba (antes lo hacía goTo).
+function ScrollToTop() {
+  const { pathname } = useLocation()
+  useEffect(() => { window.scrollTo({ top: 0 }) }, [pathname])
+  return null
 }
 
 function App() {
-  // ---------- Navegación entre vistas ----------
-  const [view, setView] = useState(VIEWS.HOME)
-  const [selectedProduct, setSelectedProduct] = useState(null)
-
-  function goTo(nextView) {
-    setView(nextView)
-    window.scrollTo({ top: 0 })
-  }
-
-  // Recibe el producto completo desde ProductCard (onViewDetail(product)).
-  function viewProductDetail(product) {
-    setSelectedProduct(product)
-    goTo(VIEWS.DETAIL)
-  }
-
   // ---------- Estado del carrito ----------
   // Cada item: { id, name, price, image, quantity }
   const [cart, setCart] = useState([])
   const [cartOpen, setCartOpen] = useState(false)
 
-  // Agrega un producto; si ya estaba en el carrito, suma 1 a la cantidad.
+  // Agrega un producto del modelo (_id, nombre, precio, imagenUrl).
+  // Si ya estaba en el carrito, suma 1 a la cantidad.
   function addToCart(product) {
     setCart((current) => {
-      const existing = current.find((item) => item.id === product.id)
+      const existing = current.find((item) => item.id === product._id)
 
       if (existing) {
         return current.map((item) =>
-          item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item
+          item.id === product._id ? { ...item, quantity: item.quantity + 1 } : item
         )
       }
 
       return [
         ...current,
         {
-          id: product.id,
-          name: product.name,
-          price: product.price,
-          image: product.image,
+          id: product._id,
+          name: product.nombre,
+          price: product.precio,
+          image: product.imagenUrl, // se resuelve con imageSrc en CartPreview
           quantity: 1,
         },
       ]
@@ -95,38 +84,11 @@ function App() {
   const toggleCart = () => setCartOpen((open) => !open)
   const closeCart = useCallback(() => setCartOpen(false), [])
 
-  // ---------- Renderizado condicional de la vista actual ----------
-  function renderView() {
-    switch (view) {
-      case VIEWS.CATALOG:
-        return <Productos onViewDetail={viewProductDetail} onAddToCart={addToCart} />
-
-      case VIEWS.DETAIL:
-        return (
-          <ProductoDetalle
-            product={selectedProduct}
-            onAddToCart={addToCart}
-            onBack={() => goTo(VIEWS.CATALOG)}
-          />
-        )
-
-      case VIEWS.CONTACT:
-        return <Contacto />
-
-      case VIEWS.HOME:
-      default:
-        return <Inicio onViewDetail={viewProductDetail} onAddToCart={addToCart} />
-    }
-  }
-
   return (
     <>
-      <Navbar
-        cartCount={cartCount}
-        currentView={view}
-        onNavigate={goTo}
-        onCartClick={toggleCart}
-      >
+      <ScrollToTop />
+
+      <Navbar cartCount={cartCount} onCartClick={toggleCart}>
         <CartPreview
           open={cartOpen}
           cart={cart}
@@ -140,7 +102,16 @@ function App() {
         />
       </Navbar>
 
-      {renderView()}
+      {/* Cada URL muestra una página; "*" atrapa cualquier ruta que no exista. */}
+      <Routes>
+        <Route path="/" element={<Inicio onAddToCart={addToCart} />} />
+        <Route path="/productos" element={<Productos onAddToCart={addToCart} />} />
+        <Route path="/productos/:id" element={<ProductoDetalle onAddToCart={addToCart} />} />
+        <Route path="/contacto" element={<Contacto />} />
+        <Route path="/admin/crear-producto" element={<AdminCrearProducto />} />
+        <Route path="/admin/editar-producto/:id" element={<AdminEditarProducto />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
 
       <Footer />
     </>

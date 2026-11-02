@@ -78,11 +78,8 @@
   background-color: rgba(139, 90, 43, 0.12);
 }
 
-
-/* "Ver Detalle" ahora es un botón: se le sacan los estilos nativos */
-button.btn-detalle {
-  border: none;
-  font: inherit;
-  font-weight: 500;
-  cursor: pointer;
+.btn-detalle {
+  display: inline-block;
+  text-align: center;
+  text-decoration: none;
 }

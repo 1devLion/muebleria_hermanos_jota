@@ -1,11 +1,11 @@
 import { ProductList } from '../components/ProductList.jsx';
 
-function Inicio({ onViewDetail, onAddToCart }) {
+function Inicio({ onAddToCart }) {
   return (
     <main>
       {/* TODO: sumar <Hero /> cuando Ramiro termine el componente. */}
       <h1>Inicio</h1>
-      <ProductList limit={3} onViewDetail={onViewDetail} onAddToCart={onAddToCart} />
+      <ProductList limit={3} onAddToCart={onAddToCart} />
     </main>
   );
 }

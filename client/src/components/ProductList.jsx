@@ -1,40 +1,32 @@
 import React, { useState, useEffect } from 'react';
 import { ProductCard } from './ProductCard.jsx';
-import { API_URL } from '../config.js';
+import { getProducts } from '../services/productsApi.js';
 import './ProductList.css';
 
-// limit: if provided, shows only that many items (home featured) and hides the search bar.
-// onViewDetail / onAddToCart: parent functions passed down to each ProductCard.
-export const ProductList = ({ limit, onViewDetail, onAddToCart }) => {
+// limit: si se pasa, muestra solo esa cantidad (destacados del inicio) y oculta el buscador.
+// onAddToCart: función del padre que se pasa a cada ProductCard.
+export const ProductList = ({ limit, onAddToCart }) => {
   const [products, setProducts] = useState([]);
   const [search, setSearch] = useState('');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  // Carga el catálogo con la capa de API (devuelve el array ya parseado).
   useEffect(() => {
-    fetch(`${API_URL}/api/productos`)
-      .then(res => {
-        if (!res.ok) {
-          throw new Error('No se pudo conectar con el servidor');
-        }
-        return res.json();
-      })
-      .then(data => {
-        // The backend returns the array directly.
-        setProducts(data);
-        setLoading(false);
-      })
+    getProducts()
+      .then(setProducts)
       .catch(err => {
-        // Without a connection fetch fails with a TypeError whose message is not clear.
+        // Sin conexión, fetch falla con un TypeError cuyo mensaje no es claro.
         setError(err instanceof TypeError ? 'No se pudo conectar con el servidor' : err.message);
-        setLoading(false);
-      });
+      })
+      .finally(() => setLoading(false));
   }, []);
 
-  // Real-time filtering by name or description.
+  // Filtrado en tiempo real por nombre o descripción (descripcion es opcional en el modelo).
+  const query = search.toLowerCase();
   const filteredProducts = products.filter(product =>
-    product.name.toLowerCase().includes(search.toLowerCase()) ||
-    product.description.toLowerCase().includes(search.toLowerCase())
+    product.nombre.toLowerCase().includes(query) ||
+    (product.descripcion ?? '').toLowerCase().includes(query)
   );
 
   const displayedProducts = limit ? filteredProducts.slice(0, limit) : filteredProducts;
@@ -44,7 +36,7 @@ export const ProductList = ({ limit, onViewDetail, onAddToCart }) => {
 
   return (
     <div className="product-list-container">
-      {/* The search bar is only shown in the full view */}
+      {/* El buscador solo se muestra en la vista completa */}
       {!limit && (
         <div className="search-bar-container">
           <input
@@ -61,9 +53,8 @@ export const ProductList = ({ limit, onViewDetail, onAddToCart }) => {
         {displayedProducts.length > 0 ? (
           displayedProducts.map(product => (
             <ProductCard
-              key={product.id}
+              key={product._id}
               product={product}
-              onViewDetail={onViewDetail}
               onAddToCart={onAddToCart}
             />
           ))
