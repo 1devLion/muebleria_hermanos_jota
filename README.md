@@ -33,6 +33,13 @@ E-commerce desarrollado como proyecto final de la certificación Full Stack Deve
 
 ---
 
+## Despliegue en Producción
+
+- **Frontend (Vercel):** https://muebleriahermanosjota-orpin.vercel.app
+- **Backend (Render):** https://muebleria-hermanos-jota-ntpd.onrender.com
+
+---
+
 ## Forma de trabajo
 
 Trabajamos por sprints y, mediante una especie de pseudo-Jira: organizamos las tareas en Google Docs.
