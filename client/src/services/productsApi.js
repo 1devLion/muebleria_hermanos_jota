@@ -4,7 +4,8 @@ const BASE_URL = `${API_URL}/api/productos`;
 
 // Sends the request and returns the parsed JSON. The backend responds with the
 // JSON directly (array or object) and errors as { mensaje: "..." }.
-// If the response is not ok, throws an Error carrying that message.
+// If the response is not ok, throws an Error carrying that message and the HTTP
+// status in `error.status` (e.g. 404, 400). Connection failures have no status.
 const request = async (url, options) => {
   let res;
   try {
@@ -17,7 +18,9 @@ const request = async (url, options) => {
   const data = await res.json().catch(() => null);
 
   if (!res.ok) {
-    throw new Error(data?.mensaje || `Error ${res.status} del servidor`);
+    const error = new Error(data?.mensaje || `Error ${res.status} del servidor`);
+    error.status = res.status;
+    throw error;
   }
 
   return data;
