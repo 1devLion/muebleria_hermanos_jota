@@ -1,7 +1,13 @@
+// Carga backend/.env antes de leer process.env
+require('dotenv').config();
+
 const express = require('express');
 const cors = require('cors');
 const logger = require('./middlewares/logger');
 const errorHandler = require('./middlewares/errorHandler');
+
+// Función de conexión
+const connectDB = require('./config/db');
 
 const app = express();
 // 3001 to avoid conflicting with the React dev server.
@@ -31,6 +37,9 @@ app.use((req, res) => {
 // The error handler always goes at the end of the chain.
 app.use(errorHandler);
 
-app.listen(PORT, () => {
-    console.log(`Servidor corriendo exitosamente en el puerto ${PORT}`);
+// Conecta a la base y recién después escucha (connectDB corta el proceso si falla).
+connectDB().then(() => {
+    app.listen(PORT, () => {
+        console.log(`Servidor corriendo exitosamente en el puerto ${PORT}`);
+    });
 });
