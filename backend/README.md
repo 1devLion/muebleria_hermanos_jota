@@ -19,11 +19,11 @@ Se definen en `backend/.env` (ese archivo **no se sube al repo**; la plantilla e
 | `nombre` | String | Obligatorio. |
 | `descripcion` | String | |
 | `precio` | Number | Obligatorio, no puede ser negativo. |
-| `stock` | Number | Por defecto `0`, no puede ser negativo. |
+| `stock` | Number | Por defecto `0`. Debe ser un número entero y no puede ser negativo. |
 | `imagenUrl` | String | Ruta relativa (`img/products/...`) o URL absoluta. |
 | `medidas`, `materiales`, `acabado` | String | Opcionales, conservados del catálogo original. |
 
-Cada producto tiene además el `_id` que genera MongoDB.
+Cada producto tiene además el `_id` que genera MongoDB y los campos `createdAt` y `updatedAt`, que agrega Mongoose automáticamente.
 
 ## Endpoints
 
@@ -34,7 +34,7 @@ Cada producto tiene además el `_id` que genera MongoDB.
 | GET | `/api/productos/:id` | Devuelve un producto por `_id`. | 200, 400 (id inválido), 404 |
 | POST | `/api/productos` | Crea un producto. | 201, 400 (datos inválidos) |
 | PUT | `/api/productos/:id` | Actualiza un producto existente. | 200, 400, 404 |
-| DELETE | `/api/productos/:id` | Elimina un producto. | 200, 404 |
+| DELETE | `/api/productos/:id` | Elimina un producto. | 200, 400 (id inválido), 404 |
 
 ### Ejemplos
 
