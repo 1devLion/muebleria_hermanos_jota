@@ -1,3 +1,4 @@
+// client/src/pages/AdminEditarProducto.jsx
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import ProductForm from '../components/ProductForm.jsx';
@@ -12,10 +13,17 @@ function AdminEditarProducto() {
 
   // Trae el producto para precargar el formulario.
   useEffect(() => {
+    let ignore = false; // pasa a true si el componente se desmonta o cambia el id
+    setLoading(true);
+    setError(null);
+
     getProductById(id)
-      .then(setProduct)
-      .catch((err) => setError(err.message))
-      .finally(() => setLoading(false));
+      .then((data) => { if (!ignore) setProduct(data); })
+      .catch((err) => { if (!ignore) setError(err.message); })
+      .finally(() => { if (!ignore) setLoading(false); });
+
+    // Cleanup: React lo ejecuta al desmontar y antes de repetir el efecto
+    return () => { ignore = true; };
   }, [id]);
 
   // Guarda los cambios y vuelve al detalle.
