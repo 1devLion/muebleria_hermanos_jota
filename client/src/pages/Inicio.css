@@ -1,0 +1,10 @@
+/* client/src/pages/Inicio.css */
+/* Sección de productos destacados (portada del CSS del sitio viejo) */
+.productos-destacados {
+  padding: 3rem 1.5rem;
+  text-align: center;
+}
+
+.productos-destacados h2 {
+  margin-bottom: 1.5rem;
+}
