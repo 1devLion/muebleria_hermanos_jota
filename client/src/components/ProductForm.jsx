@@ -30,8 +30,9 @@ function ProductForm({ initialValues = {}, onSubmit, submitLabel = 'Guardar' }) 
     if (values.precio === '' || Number(values.precio) < 0) {
       return setError('El precio es obligatorio y no puede ser negativo.');
     }
-    if (values.stock !== '' && Number(values.stock) < 0) {
-      return setError('El stock no puede ser negativo.');
+    const stockNumber = Number(values.stock);
+    if (values.stock !== '' && (!Number.isInteger(stockNumber) || stockNumber < 0)) {
+      return setError('El stock debe ser un número entero no negativo.');
     }
 
     setSending(true);
