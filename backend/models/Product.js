@@ -18,7 +18,12 @@ const productSchema = new mongoose.Schema({
   stock: {
     type: Number,
     default: 0,
-    min: [0, 'El stock no puede ser negativo']
+    min: [0, 'El stock no puede ser negativo'],
+    // Number.isInteger: 3 es válido, 2.5 no
+    validate: {
+      validator: Number.isInteger,
+      message: 'El stock debe ser un número entero'
+    }
   },
   imagenUrl: {
     type: String,
@@ -28,6 +33,9 @@ const productSchema = new mongoose.Schema({
   medidas: String,
   materiales: String,
   acabado: String
+}, {
+  // Mongoose agrega y mantiene createdAt y updatedAt automáticamente
+  timestamps: true
 });
 
 module.exports = mongoose.model('Product', productSchema);

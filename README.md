@@ -7,6 +7,7 @@ E-commerce desarrollado como proyecto final de la certificación Full Stack Deve
 ## Índice <!-- omit from toc -->
 
 - [Integrantes](#integrantes)
+- [Despliegue en Producción](#despliegue-en-producción)
 - [Forma de trabajo](#forma-de-trabajo)
   - [Git](#git)
 - [Descripción del proyecto](#descripción-del-proyecto)
@@ -15,9 +16,9 @@ E-commerce desarrollado como proyecto final de la certificación Full Stack Deve
 - [Estructura del proyecto](#estructura-del-proyecto)
 - [Arquitectura y decisiones tomadas](#arquitectura-y-decisiones-tomadas)
 - [Instalación y ejecución](#instalación-y-ejecución)
-  - [1. Backend (puerto 3000)](#1-backend-puerto-3000)
+  - [1. Backend (puerto 3001)](#1-backend-puerto-3001)
   - [2. Frontend (puerto 5173)](#2-frontend-puerto-5173)
-  - [Variables de entorno (opcionales)](#variables-de-entorno-opcionales)
+  - [Variables de entorno](#variables-de-entorno)
 - [API](#api)
 - [Flujo de trabajo](#flujo-de-trabajo)
 
@@ -72,24 +73,27 @@ Cada uno elige las tareas que desea hacer. Si la tarea depende de un archivo pre
 
 ## Descripción del proyecto
 
-El sitio permite navegar el catálogo de la mueblería, ver el detalle de cada producto (materiales, acabado y programa de garantía) y simular el armado de un carrito de compras. Los 11 productos los entrega el backend; los acabados y el programa de garantía "Herencia Viva" viven en el cliente (`client/src/data`).
+E-commerce de la Mueblería Hermanos Jota con un frontend en React y una API propia en Node.js + Express que guarda los productos en MongoDB Atlas. Permite navegar el catálogo, ver el detalle de cada producto (materiales, acabado y programa de garantía), simular el armado de un carrito de compras y administrar los productos (crear, editar y eliminar).
 
 ### Funcionalidades principales
 
-- **Inicio** con banner principal y productos destacados
-- **Catálogo** con la grilla completa de productos y buscador en tiempo real por nombre o descripción, con estados de carga y error
-- **Detalle de producto** con imagen, descripción, dimensiones, materiales, acabado, programa de garantía y botón para añadir al carrito
-- **Carrito simulado** con contador en el Navbar, vista previa desplegable (sumar, restar, quitar, vaciar, total y compra simulada). El estado vive en `App.jsx`
-- **Formulario de contacto** controlado, con validación del lado del cliente y mensaje de éxito
-- **Navegación entre vistas** (inicio, catálogo, detalle de producto y contacto) por renderizado condicional, sin router
-- **API REST** propia con CORS restringido al cliente, logger de peticiones y manejo centralizado de errores
+- **Inicio** con banner principal (Hero) y 3 productos destacados
+- **Catálogo** (`/productos`) con buscador en tiempo real por nombre o descripción, y estados de carga y error
+- **Detalle de producto** (`/productos/:id`) con imagen, descripción, medidas, materiales, acabado, programa de garantía, botón para añadir al carrito y botones Editar y Eliminar (con confirmación)
+- **Administración de productos:** alta (`/admin/crear-producto`) y edición (`/admin/editar-producto/:id`) con un mismo formulario controlado y validación del lado del cliente. Todavía no tiene autenticación
+- **Carrito simulado** con contador en el Navbar y vista previa desplegable (sumar, restar, quitar, vaciar, total y compra simulada). El estado vive en `App.jsx` y se reinicia al recargar la página
+- **Formulario de contacto** (`/contacto`) controlado, con validación del lado del cliente y mensaje de éxito. No envía los datos a ningún servidor
+- **Página 404** para las rutas que no existen
+- **API REST** con CRUD completo de productos, CORS restringido al cliente, logger de peticiones y manejo centralizado de errores
 
 ---
 
 ## Tecnologías utilizadas
 
-- **Frontend:** React 19, Vite, CSS3 (variables CSS para la identidad de marca)
-- **Backend:** Node.js, Express 5, cors
+- **Frontend:** React 19, React Router DOM 7, Vite, CSS3 (variables CSS para la identidad de marca)
+- **Backend:** Node.js 20.19 o superior, Express 5, Mongoose 9, dotenv, cors
+- **Base de datos:** MongoDB Atlas
+- **Despliegue:** Vercel (frontend) y Render (backend)
 - **Git y GitHub:** control de versiones en equipo, con ramas por tarea y Pull Requests
 
 ---
@@ -98,55 +102,68 @@ El sitio permite navegar el catálogo de la mueblería, ver el detalle de cada p
 
 ```
 muebleria_hermanos_jota/
-├── backend/              API REST (Express)
-│   ├── data/             Catálogo de productos
-│   ├── middlewares/      logger y errorHandler
-│   ├── routes/           Rutas de /api/productos
+├── backend/                  API REST (Express + Mongoose)
+│   ├── config/db.js          Conexión a MongoDB
+│   ├── controllers/          products.controller.js (lógica del CRUD)
+│   ├── data/products.js      Catálogo inicial (lo usa seed.js)
+│   ├── middlewares/          logger y errorHandler
+│   ├── models/Product.js     Esquema y modelo de producto
+│   ├── routes/               products.routes.js (rutas de /api/productos)
+│   ├── seed.js               Carga el catálogo inicial en la base
 │   └── server.js
-└── client/               Aplicación React (Vite)
-    ├── public/img/       Imágenes de productos y logo
-    └── src/
-        ├── components/   Navbar, Footer, Hero, ProductCard, ProductList,
-        │                 ProductDetail, CartPreview, ContactForm
-        ├── data/         Acabados y programa de garantía
-        ├── pages/        Inicio, Productos, ProductoDetalle, Contacto (vistas)
-        ├── App.jsx       Vista actual y estado del carrito
-        └── config.js     URL base de la API
+├── client/                   Aplicación React (Vite)
+│   ├── public/img/           Imágenes de productos, banner y logo
+│   ├── vercel.json           Rewrite para que funcionen las rutas de la SPA
+│   └── src/
+│       ├── components/       Navbar, Hero, Footer, ProductCard, ProductList,
+│       │                     ProductDetail, ProductForm, CartPreview, ContactForm
+│       ├── data/             Acabados y programa de garantía
+│       ├── pages/            Inicio, Productos, ProductoDetalle, Contacto,
+│       │                     AdminCrearProducto, AdminEditarProducto, NotFound
+│       ├── services/         productsApi.js (llamadas a la API)
+│       ├── utils/            imageSrc.js
+│       ├── App.jsx           Rutas y estado del carrito
+│       └── config.js         URL base de la API
+├── legacy/                   Primera versión del sitio (sprints 1 y 2, HTML/CSS/JS puro); ya no se usa
+└── docs/img/                 Capturas del tablero de tareas
 ```
 
 ---
 
 ## Arquitectura y decisiones tomadas
 
-El proyecto es una aplicación cliente-servidor: el frontend no tiene datos de productos propios, los pide a la API.
+El proyecto es una aplicación cliente-servidor: el frontend no tiene datos de productos propios, los pide a la API, y la API los guarda en MongoDB.
 
 **Backend (`/backend`)**
-- Express con las rutas de productos separadas en un `express.Router` (`routes/products.routes.js`).
-- Los datos son un array de objetos en un archivo `.js` local (`data/products.js`), como pide la consigna.
-- Middlewares: `logger` global (método y URL de cada petición), `express.json()` para futuras peticiones POST, un manejador de 404 y un `errorHandler` centralizado al final de la cadena.
-- CORS habilitado solo para el origen del cliente, no para cualquier origen.
+- Express con las rutas separadas en un `express.Router` (`routes/products.routes.js`). Las rutas solo asignan cada endpoint a su controlador; la lógica vive en `controllers/products.controller.js`.
+- **Modelo `Product`** (Mongoose): `nombre` (obligatorio), `descripcion`, `precio` (obligatorio, no negativo), `stock` (entero no negativo, por defecto 0), `imagenUrl` y, opcionales, `medidas`, `materiales` y `acabado`. Mongoose agrega `createdAt` y `updatedAt` automáticamente (`timestamps`).
+- Las respuestas son JSON plano (array u objeto) y los errores siempre llegan como `{ mensaje }`.
+- Middlewares: `logger` global (método y URL), `express.json()`, CORS habilitado solo para `CLIENT_ORIGIN`, un manejador de 404 en JSON y un `errorHandler` centralizado al final de la cadena (ids con formato inválido y errores de validación responden 400).
+- `server.js` conecta a la base antes de empezar a escuchar; si la conexión falla, el proceso termina.
+- Los secretos (cadena de conexión) van en `backend/.env`, que no se sube al repositorio.
 
 **Frontend (`/client`)**
-- Un componente por responsabilidad (Navbar, Footer, ProductCard, ProductList, ProductDetail, CartPreview, ContactForm). Los datos bajan por props y los eventos suben con callbacks.
-- **El carrito es estado de `App.jsx`** (`useState`). Las funciones agregar, incrementar, decrementar, quitar y vaciar viven ahí; el contador llega al Navbar por props y el desplegable del carrito recibe las funciones por props. El carrito no se guarda en el navegador: se reinicia al recargar la página.
-- `ProductList` hace `fetch` a `GET /api/productos` y maneja tres estados (cargando, error, éxito). Se reutiliza en el inicio (con `limit`, sin buscador) y en el catálogo completo (con buscador en tiempo real).
-- `ProductList` usa renderizado condicional según el estado de la petición (cargando, error o lista). `ProductDetail` no hace otro `fetch`: recibe por props el producto que ya trajo el listado y no muestra nada si no hay producto.
-- Los acabados y el programa de garantía están en `client/src/data`, porque el backend solo entrega los productos.
-- `ContactForm` es un formulario controlado: un `useState` por campo y validación al enviar.
-- **Las vistas se eligen con renderizado condicional.** `App.jsx` guarda en estado la vista actual (`home`, `catalog`, `detail` o `contact`) y el producto elegido; el Navbar y las cards avisan con callbacks (`onNavigate`, `onViewDetail`). No se usa router, así que la URL no cambia entre vistas y al recargar la página se vuelve al inicio.
+- **React Router DOM:** `BrowserRouter` en `main.jsx` y las rutas en `App.jsx`. Se usa `useParams` en el detalle y la edición, y `useNavigate` para navegar después de crear, editar o eliminar un producto.
+- `services/productsApi.js` centraliza los `fetch` a la API y lanza un `Error` con el mensaje que devuelve el backend.
+- `ProductList`, `ProductoDetalle` y `AdminEditarProducto` piden los datos en un `useEffect` y manejan los estados de carga y error (el detalle también distingue "no encontrado"). La página de edición ignora la respuesta si el componente se desmonta antes de que llegue.
+- `ProductForm` es un formulario controlado que se reutiliza para crear y editar; valida nombre, precio y que el stock sea un entero no negativo.
+- **El carrito es estado de `App.jsx`** (`useState`): las funciones agregar, incrementar, decrementar, quitar y vaciar viven ahí; el contador llega al Navbar por props. No se guarda en el navegador.
+- Los acabados y el programa de garantía están en `client/src/data`: el backend solo guarda el id del acabado de cada producto.
 - El cliente se creó con **Vite** en lugar de `create-react-app`, que está discontinuado.
 
 ---
 
 ## Instalación y ejecución
 
-Necesitás **Node.js 20 o superior** y **npm**. Hay que levantar los dos servidores, cada uno en su propia terminal.
+Necesitás **Node.js 20.19 o superior**, **npm** y una base en **MongoDB Atlas**. Hay que levantar los dos servidores, cada uno en su propia terminal.
 
 ### 1. Backend (puerto 3001)
 
 ```bash
 cd backend
+cp .env.example .env     # completá MONGODB_URI con tu cadena de Atlas
 npm install
+node seed.js             # opcional: carga los 11 productos (borra los que haya)
 npm start
 ```
 
@@ -160,27 +177,33 @@ npm install
 npm run dev
 ```
 
-La aplicación queda en `http://localhost:5173`. El catálogo y el detalle necesitan el backend corriendo; si no, muestran un mensaje de error de conexión.
+La aplicación queda en `http://localhost:5173`. El catálogo, el detalle y la administración necesitan el backend corriendo; si no, muestran un mensaje de error de conexión.
 
-### Variables de entorno (opcionales)
+### Variables de entorno
 
-| Variable | Dónde | Valor por defecto | Para qué sirve |
-| --- | --- | --- | --- |
-| `PORT` | backend | `3001` | Puerto de la API |
-| `CLIENT_ORIGIN` | backend | `http://localhost:5173` | Único origen permitido por CORS |
-| `VITE_API_URL` | client (`.env`) | `http://localhost:3001` | URL base de la API |
+| Variable | Dónde | Obligatoria | Valor por defecto | Para qué sirve |
+| --- | --- | --- | --- | --- |
+| `MONGODB_URI` | backend (`.env`) | Sí | — | Cadena de conexión de MongoDB Atlas |
+| `PORT` | backend (`.env`) | No | `3001` | Puerto de la API |
+| `CLIENT_ORIGIN` | backend (`.env`) | No | `http://localhost:5173` | Único origen permitido por CORS |
+| `VITE_API_URL` | client (`.env`) | No | `http://localhost:3001` | URL base de la API |
 
-Si cambiás el puerto del cliente o del backend, ajustá `CLIENT_ORIGIN` y `VITE_API_URL` para que coincidan (hay un ejemplo en `client/.env.example`).
+Hay plantillas en `backend/.env.example` y `client/.env.example`. El archivo `.env` real nunca se sube al repositorio. En producción, estas variables se configuran en el panel de cada servicio de hosting; Vite lee `VITE_API_URL` al compilar, así que tiene que estar definida antes del build.
 
 ---
 
 ## API
 
-| Método | Ruta | Descripción |
-| --- | --- | --- |
-| GET | `/` | Mensaje de bienvenida |
-| GET | `/api/productos` | Listado completo de productos |
-| GET | `/api/productos/:id` | Un producto por id (404 si no existe) |
+| Método | Ruta | Descripción | Respuestas |
+| --- | --- | --- | --- |
+| GET | `/` | Mensaje de bienvenida | 200 |
+| GET | `/api/productos` | Listado completo de productos | 200 |
+| GET | `/api/productos/:id` | Un producto por `_id` | 200, 400 (id inválido), 404 |
+| POST | `/api/productos` | Crea un producto | 201, 400 (datos inválidos) |
+| PUT | `/api/productos/:id` | Actualiza un producto | 200, 400, 404 |
+| DELETE | `/api/productos/:id` | Elimina un producto | 200, 400, 404 |
+
+Los errores responden `{ "mensaje": "..." }`. Hay ejemplos de cada endpoint en [`backend/README.md`](backend/README.md).
 
 ---
 
